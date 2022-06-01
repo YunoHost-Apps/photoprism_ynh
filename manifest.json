@@ -39,7 +39,7 @@
             {
                 "name": "path",
                 "type": "path",
-                "example": "/example",
+                "example": "/test",
                 "default": "/example"
             },
             {
