@@ -3,23 +3,22 @@
     "id": "example",
     "packaging_format": 1,
     "description": {
-        "en": "Explain in *a few (10~15) words* the purpose of the app or what it actually does (it is meant to give a rough idea to users browsing a catalog of 100+ apps)",
-        "fr": "Expliquez en *quelques* (10~15) mots l'utilité de l'app ou ce qu'elle fait (l'objectif est de donner une idée grossière pour des utilisateurs qui naviguent dans un catalogue de 100+ apps)"
+        "en": "AI-Powered Photos App for the Decentralized Web",
+        "fr": "Gestion de photos en ligne"
     },
-    "version": "1.0~ynh1",
-    "url": "https://example.com",
+    "version": "2022.28.05~ynh1",
+    "url": "photoprism.app",
     "upstream": {
-        "license": "free",
-        "website": "https://example.com",
-        "demo": "https://demo.example.com",
-        "admindoc": "https://yunohost.org/packaging_apps",
-        "userdoc": "https://yunohost.org/apps",
-        "code": "https://some.forge.com/example/example"
+        "license": "AGPL-3.0-only",
+        "website": "photoprism.app",
+        "demo": "https://demo-fr.photoprism.app",
+        "admindoc": "https://docs.photoprism.app/developer-guide/",
+        "userdoc": "https://docs.photoprism.app/user-guide/",
+        "code": "https://github.com/photoprism/photoprism"
     },
-    "license": "free",
+    "license": "AGPL-3.0-only",
     "maintainer": {
-        "name": "John doe",
-        "email": "john.doe@example.com"
+        "name": "Raoul de Limezy"
     },
     "requirements": {
         "yunohost": ">= 4.3.0"
@@ -27,8 +26,6 @@
     "multi_instance": true,
     "services": [
         "nginx",
-        "php7.3-fpm",
-        "mysql"
     ],
     "arguments": {
         "install" : [
@@ -58,15 +55,11 @@
                 "default": "fr"
             },
             {
-                "name": "admin",
-                "type": "user"
-            },
-            {
-                "name": "password",
+                "name": "admin password",
                 "type": "password",
                 "help": {
-                    "en": "Use the help field to add an information for the admin about this question.",
-                    "fr": "Utilisez le champ aide pour ajouter une information à l'intention de l'administrateur à propos de cette question."
+                    "en": "Photoprism currently supports only one user : admin. Choose a password here.",
+                    "fr": "Photoprism ne permet qu'un seul utilisateur pour le moment. Choisissez un mot de passe ici."
                 }
             }
         ]
