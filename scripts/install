@@ -129,6 +129,9 @@ ynh_add_nginx_config
 
 pushd "$final_path"
 	git init
+	# Setup nodejs and npm
+	ynh_use_nodejs
+	ynh_exec_as $app env $ynh_node_load_PATH $ynh_npm install 2>&1
 	# Setup go exe and environnement
 	ynh_use_go
 	export GOPATH="$final_path/go"
