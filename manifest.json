@@ -55,7 +55,7 @@
                 "default": "fr"
             },
             {
-                "name": "admin password",
+                "name": "password",
                 "type": "password",
                 "help": {
                     "en": "Photoprism currently supports only one user : admin. Choose a password here.",
