@@ -128,6 +128,7 @@ ynh_add_nginx_config
 #=================================================
 
 pushd "$final_path"
+	git init
 	# Setup go exe and environnement
 	ynh_use_go
 	export GOPATH="$final_path/go"
