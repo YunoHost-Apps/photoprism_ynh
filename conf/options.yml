@@ -11,8 +11,11 @@ HttpServerHost: 127.0.0.1
 HttpMode: release
 HttpPort: __PORT__
 HttpPassword:
-DatabaseDriver: sqlite
-DatabaseDsn: .photoprism.db
+DatabaseDriver: MySQL
+DatabaseServer: 127.0.0.1
+DatabaseName: photoprism
+DatabaseUser: photoprism
+DatabasePassword: __DB_PWD__
 Theme: lavendel
 Language: __LANGUAGE_KEY__
 SiteDescription: __APP__
