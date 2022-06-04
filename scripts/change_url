@@ -108,7 +108,16 @@ fi
 #=================================================
 # SPECIFIC MODIFICATIONS
 #=================================================
-# ...
+
+ynh_script_progression --message="Updating the configuration file..." --weight=1
+domain=$new_domain
+path_url=$new_path
+
+ynh_secure_remove --file="$final_path/build/config/options.yml"
+ynh_add_config --template="options.yml" --destination="$final_path/build/config/options.yml"
+chmod 400 "$final_path/build/config/options.yml"
+chown $app:$app "$final_path/build/config/options.yml"
+
 #=================================================
 
 #=================================================
