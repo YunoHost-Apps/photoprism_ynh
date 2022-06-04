@@ -107,9 +107,19 @@ ynh_mysql_setup_db --db_user=$db_user --db_name=$db_name
 #=================================================
 ynh_script_progression --message="Setting up source files..." --time --weight=1
 
-ynh_app_setting_set --app=$app --key=final_path --value=$final_path
+#ynh_app_setting_set --app=$app --key=final_path --value=$final_path
 # Download, check integrity, uncompress and patch the source from app.src
-ynh_setup_source --dest_dir="$final_path"
+#ynh_setup_source --dest_dir="$final_path"
+
+# I need to use git clone instead of ynh_setup_source
+
+pushd "/var/www/"
+	git clone https://github.com/photoprism/photoprism
+popd
+
+pushd "$final_path"
+	git checkout 220528-efb5d710
+popd
 
 chmod 750 "$final_path"
 chmod -R o-rwx "$final_path"
@@ -128,7 +138,6 @@ ynh_add_nginx_config
 #=================================================
 
 pushd "$final_path"
-	git init
 	# Setup go exe and environnement
 	ynh_use_go
 	export GOPATH="$final_path/go"
