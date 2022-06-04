@@ -159,7 +159,7 @@ datadir=/home/yunohost.app/$app
 ynh_app_setting_set --app=$app --key=datadir --value=$datadir
 
 mkdir -p $datadir
-
+mkdir "$datadir/assets/"
 mv "$final_path/build/assets/"*  "$datadir/assets/"
 
 chmod 750 "$datadir"
