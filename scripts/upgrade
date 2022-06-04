@@ -108,6 +108,7 @@ ynh_install_app_dependencies $pkg_dependencies
 #=================================================
 # BUILD PHOTOPRISM
 #=================================================
+ynh_script_progression --message="Building Photoprism..." --time --weight=1
 
 pushd "$final_path"
 	# Setup go exe and environnement

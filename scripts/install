@@ -136,6 +136,7 @@ ynh_add_nginx_config
 #=================================================
 # BUILD PHOTOPRISM
 #=================================================
+ynh_script_progression --message="Building Photoprism..." --time --weight=1
 
 pushd "$final_path"
 	# Setup go exe and environnement
