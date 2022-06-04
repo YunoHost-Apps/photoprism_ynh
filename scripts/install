@@ -118,7 +118,7 @@ pushd "/var/www/"
 popd
 
 pushd "$final_path"
-	git checkout "$PHOTOPRISM_VERSION"
+	git checkout "$PHOTOPRISM_VERSION" 2>&1
 popd
 
 chmod 750 "$final_path"
