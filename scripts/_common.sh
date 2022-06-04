@@ -4,6 +4,9 @@
 # COMMON VARIABLES
 #=================================================
 
+# Tag name of the installed version
+PHOTOPRISM_VERSION="220528-efb5d710"
+
 NODEJS_VERSION=14
 GO_VERSION="1.18"
 
