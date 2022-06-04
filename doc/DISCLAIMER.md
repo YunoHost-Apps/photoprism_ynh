@@ -1,12 +1,8 @@
 * Any known limitations, constrains or stuff not working, such as (but not limited to):
-    * requiring a full dedicated domain ?
-    * architectures not supported ?
-    * not-working single-sign on or LDAP integration ?
-    * the app requires an important amount of RAM / disk / .. to install or to work properly
-    * etc...
+    * Not tested yet with AMD architecture
+    * Photoprism currently supports only one user. OIDC should be supported within a few months
+    * Photoprism requires an important amount of RAM and disk to install or to work properly
 
-* Other infos that people should be aware of, such as:
-    * any specific step to perform after installing (such as manually finishing the install, specific admin credentials, ...)
-    * how to configure / administrate the application if it ain't obvious
-    * upgrade process / specificities / things to be aware of ?
-    * security considerations ?
+* At first install, you'll be prompted for credentials
+    * Username is "admin"
+    * Password is the password you have set during the installation
