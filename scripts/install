@@ -167,7 +167,6 @@ chmod -R o-rwx "$datadir"
 chown -R $app:www-data "$datadir"
 
 
-
 #=================================================
 # ADD A CONFIGURATION
 #=================================================
