@@ -45,9 +45,10 @@ ynh_add_swap () {
 		local swap_size=0
 	fi
 
-	echo "Tests valeurs"
+	echo $swap_size
+	echo $()
 	# If there's enough space for a swap, and no existing swap here
-	if [ $swap_size -ne 0 ] && [ ! -e /swap_$app ]
+	if [[ $swap_size -ne 0 ]] && [[ ! -e /swap_$app ]]
 	then
 		echo "OK ici"
 		# Create file
