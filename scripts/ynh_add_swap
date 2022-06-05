@@ -48,14 +48,13 @@ ynh_add_swap () {
 	echo $swap_size
 	echo $()
 	# If there's enough space for a swap, and no existing swap here
-	if [[ $swap_size -ne 0 ]] #&& [[ ! -e /swap_$app ]]
+	if [[ $swap_size -ne 0 ]] && [[ ! -e /swap_$app ]]
 	then
-		echo "OK ici"
 		# Create file
 		truncate -s 0 /swap_$app
 		
 		# set the No_COW attribute on the swapfile with chattr
-		chattr +C /swap_$app
+		#chattr +C /swap_$app
 		
 		# Preallocate space for the swap file, fallocate may sometime not be used, use dd instead in this case
 		if ! fallocate -l ${swap_size}K /swap_$app
