@@ -69,7 +69,7 @@ echo $(ynh_get_ram -t)
 if [ $(ynh_get_ram -t) -lt "2000" ]; then
 	ynh_script_progression --message="Adding swap to help building Photoprism..." --time --weight=1
 	ynh_add_swap --size=500
-	swapFlag = true
+	swapFlag=true
 else
 	swapFlag = false
 fi
