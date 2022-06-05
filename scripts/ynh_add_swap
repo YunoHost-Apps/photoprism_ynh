@@ -46,11 +46,8 @@ ynh_add_swap () {
 	fi
 
 	# If there's enough space for a swap, and no existing swap here
-	echo "I'm before"
-	#if [ $swap_size -ne 0 ] && [ ! -e /swap_$app ]
-	if [ ! -e /swap_$app ]
+	if [ $swap_size -ne 0 ] && [ ! -e /swap_$app ]
 	then
-		echo "I'm in !"
 		# Preallocate space for the swap file, fallocate may sometime not be used, use dd instead in this case
 		if ! fallocate -l ${swap_size}K /swap_$app
 		then
