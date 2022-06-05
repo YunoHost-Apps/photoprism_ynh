@@ -69,8 +69,8 @@ total_memory=$(ynh_get_ram --total)
 swap_needed=0
 
 # Need at least 2Go of RAM
-if [ $total_memory -lt 2048 ]; then
-	swap_needed=$((2048 - total_memory))
+if [ $total_memory -lt 3072 ]; then
+	swap_needed=$((3072 - total_memory))
 fi
 
 if [ $swap_needed -gt 0 ]; then
