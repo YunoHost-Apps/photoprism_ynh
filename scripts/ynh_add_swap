@@ -46,11 +46,10 @@ ynh_add_swap () {
 	fi
 
 	echo "Tests valeurs"
-	echo $($swap_size -ne 0)
-	echo $(! -e /swap_$app)
 	# If there's enough space for a swap, and no existing swap here
 	if [ $swap_size -ne 0 ] && [ ! -e /swap_$app ]
 	then
+		echo "OK ici"
 		# Create file
 		truncate -s 0 /swap_$app
 		
