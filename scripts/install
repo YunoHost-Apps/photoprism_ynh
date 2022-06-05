@@ -68,9 +68,9 @@ ynh_app_setting_set --app=$app --key=language --value=$language_key
 total_memory=$(ynh_get_ram --total)
 swap_needed=0
 
-# Need at least 1.5Go of RAM to build and run
-if [ $total_memory -lt 1536 ]; then
-	swap_needed=$((1536 - total_memory))
+# Need at least 2Go of RAM to build and run
+if [ $total_memory -lt 2048 ]; then
+	swap_needed=$((2048 - total_memory))
 fi
 
 if [ $swap_needed -gt 0 ]; then
