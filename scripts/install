@@ -67,7 +67,7 @@ ynh_app_setting_set --app=$app --key=language --value=$language_key
 
 if [ $(ynh_get_ram -t) -lt "2000" ]; then
 	ynh_script_progression --message="Adding swap to help building Photoprism..." --time --weight=1
-	ynh_add_swap --size=1000 2>&1
+	ynh_add_swap --size=1000
 	swapFlag=true
 else
 	swapFlag=false
