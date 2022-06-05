@@ -62,15 +62,22 @@ ynh_app_setting_set --app=$app --key=path --value=$path_url
 ynh_app_setting_set --app=$app --key=language --value=$language_key
 
 #=================================================
-# ADDING SWAP IF NEEDED
+# ADD SWAP IF NEEDED
 #=================================================
 
-if [ $(ynh_get_ram -t) -lt "2000" ]; then
-	ynh_script_progression --message="Adding swap to help building Photoprism..." --time --weight=1
-	ynh_add_swap --size=1000
-	swapFlag=true
-else
-	swapFlag=false
+total_memory=$(ynh_get_ram --total)
+swap_needed=0
+
+# Need at least 2Go of RAM
+if [ $total_memory -lt 2048 ]; then
+	swap_needed=$((2048 - total_memory))
+fi
+
+if [ $swap_needed -gt 0 ]; then
+	ynh_script_progression --message="Adding $swap_needed Mo to swap..."
+	if ! ynh_add_swap --size=$swap_needed; then
+		ynh_print_warn --message="Please add $swap_needed Mo to swap to make Photoprism work properly"
+	fi
 fi
 
 #=================================================
@@ -163,15 +170,6 @@ pushd "$final_path"
 	make all install DESTDIR=$final_path/build 2>&1
 	ynh_secure_remove --file="$final_path/go"
 popd
-
-#=================================================
-# REMOVING SWAP IF NEEDED
-#=================================================
-
-if [ "$swapFlag" == true ]; then
-	ynh_del_swap 2>&1
-	ynh_script_progression --message="Removing swap..." --time --weight=1
-fi
 
 #=================================================
 # CREATE DATA DIRECTORY
