@@ -106,13 +106,6 @@ then
 fi
 
 #=================================================
-# REMOVE SWAP IF NEEDED
-#=================================================
-ynh_script_progression --message="Removing swap if needed..."
-
-ynh_del_swap
-
-#=================================================
 # SPECIFIC REMOVE
 #=================================================
 # REMOVE VARIOUS FILES

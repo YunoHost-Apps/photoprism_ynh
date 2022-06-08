@@ -8,7 +8,6 @@
 
 source _common.sh
 source ynh_install_go
-source ynh_add_swap
 source /usr/share/yunohost/helpers
 
 #=================================================
@@ -119,6 +118,8 @@ pushd "$final_path"
 	export GOBIN=$GOPATH/bin
 	# Setup tensorflow library
 	./scripts/dist/install-tensorflow.sh
+	# Setup node environment
+	export NODE_OPTIONS=--max_old_space_size=1024
 	# Build server from source
 	ynh_secure_remove --file="$final_path/build"
 	make all install DESTDIR=$final_path/build 2>&1
