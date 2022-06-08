@@ -147,8 +147,6 @@ pushd "$final_path"
 	# Setup tensorflow library
 	./scripts/dist/install-tensorflow.sh
 	# Setup node environment
-	ynh_use_nodejs
-	apt install npm
 	export NODE_OPTIONS=--max_old_space_size=1024
 	# Build server from source
 	ynh_secure_remove --file="$final_path/build"
