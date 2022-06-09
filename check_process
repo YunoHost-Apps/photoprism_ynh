@@ -9,9 +9,7 @@
 		path="/path"
 		is_public=1
 		language="fr"
-		admin="john"
 		password="1Strong-Password"
-		port="666"
 	; Checks
 		pkg_linter=1
 		setup_sub_dir=1
@@ -20,7 +18,6 @@
 		setup_private=1
 		setup_public=1
 		upgrade=1
-		upgrade=1	from_commit=CommitHash
 		backup_restore=1
 		multi_instance=1
 		port_already_use=0
