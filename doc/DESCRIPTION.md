@@ -1,9 +1,10 @@
-Some long and extensive description of what the app is and does, lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+PhotoPrism® is an AI-Powered Photos App for the Decentralized Web. It makes use of the latest technologies to tag and find pictures automatically without getting in your way. You can run it at home, on a private server, or in the cloud.
 
 ### Features
 
-- Ut enim ad minim veniam, quis nostrud exercitation ullamco ;
-- Laboris nisi ut aliquip ex ea commodo consequat ;
-- Duis aute irure dolor in reprehenderit in voluptate ;
-- Velit esse cillum dolore eu fugiat nulla pariatur ;
-- Excepteur sint occaecat cupidatat non proident, sunt in culpa."
+- Browse all your photos and videos without worrying about RAW conversion, duplicates or video formats
+- Easily find specific pictures using powerful search filters
+- Includes four high-resolution world maps to bring back the memories of your favorite trips
+- Play Live Photos™ by hovering over them in albums and search results
+- Recognizes the faces of your family and friends
+- Automatic classification of pictures based on their content and location
