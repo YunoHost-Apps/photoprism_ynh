@@ -84,14 +84,9 @@ ynh_script_progression --message="Restoring the data directory..." --time --weig
 
 ynh_restore_file --origin_path="$datadir" --not_mandatory
 
-mkdir -p $datadir
+mkdir -p "$datadir/assets/"
+mv -f "$final_path/build/assets/"*  "$datadir/assets/"
 
-# FIXME: this should be managed by the core in the future
-# Here, as a packager, you may have to tweak the ownerhsip/permissions
-# such that the appropriate users (e.g. maybe www-data) can access
-# files in some cases.
-# But FOR THE LOVE OF GOD, do not allow r/x for "others" on the entire folder -
-# this will be treated as a security issue.
 chmod 750 "$datadir"
 chmod -R o-rwx "$datadir"
 chown -R $app:www-data "$datadir"

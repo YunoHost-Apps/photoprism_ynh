@@ -163,9 +163,8 @@ ynh_script_progression --message="Creating a data directory..." --time --weight=
 datadir=/home/yunohost.app/$app
 ynh_app_setting_set --app=$app --key=datadir --value=$datadir
 
-mkdir -p $datadir
-mkdir "$datadir/assets/"
-mv "$final_path/build/assets/"*  "$datadir/assets/"
+mkdir -p "$datadir/assets/"
+mv -f "$final_path/build/assets/"*  "$datadir/assets/"
 
 chmod 750 "$datadir"
 chmod -R o-rwx "$datadir"
