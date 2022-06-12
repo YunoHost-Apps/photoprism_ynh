@@ -132,7 +132,7 @@ popd
 #=================================================
 ynh_script_progression --message="Updating data directory..." --time --weight=1
 
-mv -f "$final_path/build/assets/"*  "$datadir/assets/"
+rsync -a "$final_path/build/assets/" "$datadir/assets/"
 
 chmod 750 "$datadir"
 chmod -R o-rwx "$datadir"

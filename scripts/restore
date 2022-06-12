@@ -85,7 +85,7 @@ ynh_script_progression --message="Restoring the data directory..." --time --weig
 ynh_restore_file --origin_path="$datadir" --not_mandatory
 
 mkdir -p "$datadir/assets/"
-mv -f "$final_path/build/assets/"*  "$datadir/assets/"
+rsync -a "$final_path/build/assets/" "$datadir/assets/"
 
 chmod 750 "$datadir"
 chmod -R o-rwx "$datadir"
