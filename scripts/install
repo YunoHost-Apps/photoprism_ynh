@@ -147,7 +147,7 @@ pushd "$final_path"
 	# Setup tensorflow library
 	./scripts/dist/install-tensorflow.sh
 	# Setup node environment
-	export NODE_OPTIONS=--max_old_space_size=800
+	export NODE_OPTIONS=--max_old_space_size=1024
 	# Build server from source
 	ynh_use_nodejs
 	env "$ynh_node_load_PATH" npm install -g npm
