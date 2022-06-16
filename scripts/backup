@@ -71,6 +71,12 @@ ynh_backup --src_path="/etc/nginx/conf.d/$domain.d/$app.conf"
 ynh_backup --src_path="/etc/logrotate.d/$app"
 
 #=================================================
+# BACKUP LOGS
+#=================================================
+
+ynh_backup --src_path="/var/log/$app/$app.log"
+
+#=================================================
 # BACKUP SYSTEMD
 #=================================================
 
