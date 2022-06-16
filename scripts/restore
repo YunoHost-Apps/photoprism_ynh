@@ -35,6 +35,7 @@ final_path=$(ynh_app_setting_get --app=$app --key=final_path)
 db_name=$(ynh_app_setting_get --app=$app --key=db_name)
 db_user=$db_name
 datadir=$(ynh_app_setting_get --app=$app --key=datadir)
+port=$(ynh_app_setting_get --app=$app --key=port)
 
 #=================================================
 # CHECK IF THE APP CAN BE RESTORED
