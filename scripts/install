@@ -85,6 +85,22 @@ ynh_install_nodejs --nodejs_version=$NODEJS_VERSION 2>&1
 ynh_exec_warn_less ynh_install_go --go_version=$GO_VERSION
 
 #=================================================
+# ADD SWAP IF NEEDED
+#=================================================
+ynh_script_progression --message="Adding swap is needed..."
+
+total_memory=$(ynh_get_ram --total)
+swap_needed=0
+
+if [ $total_memory -lt $MEMORY_NEEDED ]; then
+	# Need a minimum of 2.5Go of memory
+	swap_needed=$(($MEMORY_NEEDED - $total_memory))
+fi
+
+ynh_script_progression --message="Adding $swap_needed Mo to swap..."
+ynh_add_swap --size=$swap_needed
+
+#=================================================
 # CREATE DEDICATED USER
 #=================================================
 ynh_script_progression --message="Configuring system user..." --time --weight=1
@@ -147,7 +163,7 @@ pushd "$final_path"
 	# Setup tensorflow library
 	./scripts/dist/install-tensorflow.sh
 	# Setup node environment
-	export NODE_OPTIONS=--max_old_space_size=800
+	export NODE_OPTIONS=--max_old_space_size=2048
 	# Build server from source
 	ynh_use_nodejs
 	env "$ynh_node_load_PATH" npm install -g npm
