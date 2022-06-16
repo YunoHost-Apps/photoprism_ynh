@@ -9,6 +9,7 @@
 # Keep this path for calling _common.sh inside the execution's context of backup and restore scripts
 source ../settings/scripts/_common.sh
 source /usr/share/yunohost/helpers
+source ynh_add_swap
 
 #=================================================
 # MANAGE SCRIPT FAILURE
@@ -100,6 +101,22 @@ ynh_script_progression --message="Reinstalling dependencies..." --time --weight=
 
 # Define and install dependencies
 ynh_install_app_dependencies $pkg_dependencies
+
+#=================================================
+# ADD SWAP IF NEEDED
+#=================================================
+ynh_script_progression --message="Adding swap is needed..."
+
+total_memory=$(ynh_get_ram --total)
+swap_needed=0
+
+if [ $total_memory -lt $MEMORY_NEEDED ]; then
+	# Need a minimum of 2.5Go of memory
+	swap_needed=$(($MEMORY_NEEDED - $total_memory))
+fi
+
+ynh_script_progression --message="Adding $swap_needed Mo to swap..."
+ynh_add_swap --size=$swap_needed
 
 #=================================================
 # RESTORE THE MYSQL DATABASE
