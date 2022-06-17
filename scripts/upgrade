@@ -136,6 +136,8 @@ pushd "$final_path"
 	export GOBIN=$GOPATH/bin
 	# Setup tensorflow library
 	./scripts/dist/install-tensorflow.sh
+	# Remove the former build file
+	ynh_secure_remove --file="$final_path/build"
 	# Setup node environment
 	export NODE_OPTIONS=--max_old_space_size=1024
 	# Build server from source
