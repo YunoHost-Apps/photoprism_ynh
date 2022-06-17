@@ -37,6 +37,7 @@ db_pwd=$(ynh_app_setting_get --app=$app --key=mysqlpwd)
 language_key=$(ynh_app_setting_get --app=$app --key=language)
 datadir=$(ynh_app_setting_get --app=$app --key=datadir)
 port=$(ynh_app_setting_get --app=$app --key=port)
+password=$(ynh_app_setting_get --app=$app --key=password)
 
 #=================================================
 # DECLARE DATA AND CONF FILES TO BACKUP
