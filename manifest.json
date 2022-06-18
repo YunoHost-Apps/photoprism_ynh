@@ -10,7 +10,7 @@
     "url": "photoprism.app",
     "upstream": {
         "license": "AGPL-3.0-only",
-        "website": "photoprism.app",
+        "website": "https://photoprism.app",
         "demo": "https://demo-fr.photoprism.app",
         "admindoc": "https://docs.photoprism.app/developer-guide/",
         "userdoc": "https://docs.photoprism.app/user-guide/",
