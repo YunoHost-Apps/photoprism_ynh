@@ -51,7 +51,6 @@ ynh_add_swap () {
 		# Preallocate space for the swap file, fallocate may sometime not be used, use dd instead in this case
 		if ! fallocate -l ${swap_size}K /swap_$app
 		then
-			echo "I'm also in !"
 			dd if=/dev/zero of=/swap_$app bs=1024 count=${swap_size}
 		fi
 		chmod 0600 /swap_$app
