@@ -6,11 +6,11 @@
         "en": "AI-Powered Photos App for the Decentralized Web",
         "fr": "Gestion de photos en ligne"
     },
-    "version": "2022.28.05~ynh1",
+    "version": "2022.05.28~ynh2",
     "url": "photoprism.app",
     "upstream": {
         "license": "AGPL-3.0-only",
-        "website": "photoprism.app",
+        "website": "https://photoprism.app",
         "demo": "https://demo-fr.photoprism.app",
         "admindoc": "https://docs.photoprism.app/developer-guide/",
         "userdoc": "https://docs.photoprism.app/user-guide/",

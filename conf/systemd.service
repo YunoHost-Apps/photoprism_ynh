@@ -1,5 +1,5 @@
 [Unit]
-Description=Small description of the service
+Description=AI-Powered Photos App for the Decentralized Web
 After=network.target
 
 [Service]
