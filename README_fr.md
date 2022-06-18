@@ -50,7 +50,7 @@ PhotoPrism® is an AI-Powered Photos App for the Decentralized Web. It makes use
 
 ## Documentations et ressources
 
-* Site officiel de l'app : <photoprism.app>
+* Site officiel de l'app : <https://photoprism.app>
 * Documentation officielle utilisateur : <https://docs.photoprism.app/user-guide/>
 * Documentation officielle de l'admin : <https://docs.photoprism.app/developer-guide/>
 * Dépôt de code officiel de l'app : <https://github.com/photoprism/photoprism>
