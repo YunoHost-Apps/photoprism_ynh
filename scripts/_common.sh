@@ -5,7 +5,7 @@
 #=================================================
 
 # Tag name of the installed version
-PHOTOPRISM_VERSION="220528-efb5d710"
+PHOTOPRISM_VERSION="220617-0402b8d3"
 
 MEMORY_NEEDED="3000"
 NODEJS_VERSION=14
