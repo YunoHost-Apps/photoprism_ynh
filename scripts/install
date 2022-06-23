@@ -16,8 +16,7 @@ source /usr/share/yunohost/helpers
 #=================================================
 
 ynh_clean_setup () {
-	### Remove this function if there's nothing to clean before calling the remove script.
-	true
+	ynh_clean_check_starting
 }
 # Exit if an error occurs during the execution of the script
 ynh_abort_if_errors
@@ -43,7 +42,6 @@ fi
 #=================================================
 # CHECK IF THE APP CAN BE INSTALLED WITH THESE ARGS
 #=================================================
-
 ynh_script_progression --message="Validating installation parameters..." --time --weight=1
 
 final_path=/var/www/$app
@@ -188,13 +186,13 @@ chmod 750 "$datadir"
 chmod -R o-rwx "$datadir"
 chown -R $app:www-data "$datadir"
 
-
 #=================================================
 # ADD A CONFIGURATION
 #=================================================
 ynh_script_progression --message="Adding a configuration file..." --time --weight=1
 
 ynh_add_config --template="options.yml" --destination="$final_path/build/config/options.yml"
+
 chmod 400 "$final_path/build/config/options.yml"
 chown $app:$app "$final_path/build/config/options.yml"
 
