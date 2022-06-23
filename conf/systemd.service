@@ -7,7 +7,7 @@ Type=simple
 User=__APP__
 Group=__APP__
 WorkingDirectory=__FINALPATH__/
-ExecStart=__FINALPATH__/build/bin/photoprism --config-path __FINALPATH__/build/config/ --trace start
+ExecStart=__FINALPATH__/live/bin/photoprism --config-path __FINALPATH__/live/config/ --trace start
 StandardOutput=append:/var/log/__APP__/__APP__.log
 StandardError=inherit
 
