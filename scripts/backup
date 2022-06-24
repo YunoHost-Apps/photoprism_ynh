@@ -29,14 +29,8 @@ app=$YNH_APP_INSTANCE_NAME
 
 final_path=$(ynh_app_setting_get --app=$app --key=final_path)
 domain=$(ynh_app_setting_get --app=$app --key=domain)
-path_url=$(ynh_app_setting_get --app=$app --key=path)
 db_name=$(ynh_app_setting_get --app=$app --key=db_name)
-db_user=$db_name
-db_pwd=$(ynh_app_setting_get --app=$app --key=mysqlpwd)
-language_key=$(ynh_app_setting_get --app=$app --key=language)
 datadir=$(ynh_app_setting_get --app=$app --key=datadir)
-port=$(ynh_app_setting_get --app=$app --key=port)
-password=$(ynh_app_setting_get --app=$app --key=password)
 
 #=================================================
 # DECLARE DATA AND CONF FILES TO BACKUP

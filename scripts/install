@@ -7,8 +7,6 @@
 #=================================================
 
 source _common.sh
-source ynh_install_go
-source ynh_add_swap
 source /usr/share/yunohost/helpers
 
 #=================================================
@@ -57,7 +55,7 @@ ynh_script_progression --message="Storing installation settings..." --time --wei
 
 ynh_app_setting_set --app=$app --key=domain --value=$domain
 ynh_app_setting_set --app=$app --key=path --value=$path_url
-ynh_app_setting_set --app=$app --key=language --value=$language_key
+ynh_app_setting_set --app=$app --key=language_key --value=$language_key
 ynh_app_setting_set --app=$app --key=password --value=$password
 
 #=================================================
@@ -68,7 +66,7 @@ ynh_app_setting_set --app=$app --key=password --value=$password
 ynh_script_progression --message="Finding an available port..." --time --weight=1
 
 # Find an available port
-port=$(ynh_find_port --port=2342)
+port=$(ynh_find_port --port=8095)
 ynh_app_setting_set --app=$app --key=port --value=$port
 
 #=================================================
@@ -77,28 +75,6 @@ ynh_app_setting_set --app=$app --key=port --value=$port
 ynh_script_progression --message="Installing dependencies..." --time --weight=1
 
 ynh_install_app_dependencies $pkg_dependencies
-
-# Install nodejs
-#ynh_install_nodejs --nodejs_version=$NODEJS_VERSION 2>&1
-
-# Install go
-#ynh_exec_warn_less ynh_install_go --go_version=$GO_VERSION
-
-#=================================================
-# ADD SWAP IF NEEDED
-#=================================================
-ynh_script_progression --message="Adding swap is needed..."
-
-total_memory=$(ynh_get_ram --total)
-swap_needed=0
-
-if [ $total_memory -lt $MEMORY_NEEDED ]; then
-	# Need a minimum of 2.5Go of memory
-	swap_needed=$(($MEMORY_NEEDED - $total_memory))
-fi
-
-ynh_script_progression --message="Adding $swap_needed Mo to swap..."
-ynh_add_swap --size=$swap_needed
 
 #=================================================
 # CREATE DEDICATED USER
@@ -140,20 +116,7 @@ ynh_script_progression --message="Configuring NGINX web server..." --time --weig
 ynh_add_nginx_config
 
 #=================================================
-# CREATE DATA DIRECTORY
-#=================================================
-ynh_script_progression --message="Creating a data directory..." --time --weight=1
-
-datadir=/home/yunohost.app/$app
-ynh_app_setting_set --app=$app --key=datadir --value=$datadir
-
-mkdir -p "$datadir"
-#rsync -a "$final_path/build/assets/" "$datadir/assets/"
-
-chmod 750 "$datadir"
-chmod -R o-rwx "$datadir"
-chown -R $app:www-data "$datadir"
-
+# SPECIFIC SETUP
 #=================================================
 # MAKE INSTALL
 #=================================================
@@ -163,13 +126,25 @@ ynh_script_progression --message="Making install..."
 pushd $final_path/build
 	./docker-image-extract photoprism/photoprism:$PHOTOPRISM_VERSION
 popd
-mv -f "$final_path/build/output/opt/photoprism/" "$final_path/live/"
-mv -f "$final_path/live/assets/" "$datadir/assets/"
+mkdir -p "$final_path/live/"
+rsync -a "$final_path/build/output/opt/photoprism/" "$final_path/live/"
 ynh_secure_remove --file="$final_path/build"
 
 chmod 750 "$final_path"
 chmod -R o-rwx "$final_path"
 chown -R $app:$app "$final_path"
+
+#=================================================
+# CREATE DATA DIRECTORY
+#=================================================
+ynh_script_progression --message="Creating a data directory..." --time --weight=1
+
+datadir=/home/yunohost.app/$app
+ynh_app_setting_set --app=$app --key=datadir --value=$datadir
+
+mkdir -p $datadir
+rsync -a "$final_path/live/assets/" "$datadir/assets/"
+ynh_secure_remove --file="$final_path/live/assets/"
 
 chmod 750 "$datadir"
 chmod -R o-rwx "$datadir"
@@ -216,7 +191,7 @@ yunohost service add $app --description="AI-Powered Photos App for the Decentral
 ynh_script_progression --message="Starting a systemd service..." --time --weight=1
 
 # Start a systemd service
-ynh_systemd_action --service_name=$app --action="start" --log_path="/var/log/$app/$app.log"
+ynh_systemd_action --service_name=$app --action="start" --log_path="/var/log/$app/$app.log" --line_match="http: starting web server at"
 
 #=================================================
 # SETUP SSOWAT

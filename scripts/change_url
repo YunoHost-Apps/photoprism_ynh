@@ -33,7 +33,7 @@ final_path=$(ynh_app_setting_get --app=$app --key=final_path)
 db_name=$(ynh_app_setting_get --app=$app --key=db_name)
 db_user=$db_name
 db_pwd=$(ynh_app_setting_get --app=$app --key=mysqlpwd)
-language_key=$(ynh_app_setting_get --app=$app --key=language)
+language_key=$(ynh_app_setting_get --app=$app --key=language_key)
 datadir=$(ynh_app_setting_get --app=$app --key=datadir)
 port=$(ynh_app_setting_get --app=$app --key=port)
 password=$(ynh_app_setting_get --app=$app --key=password)
@@ -113,17 +113,17 @@ fi
 #=================================================
 # SPECIFIC MODIFICATIONS
 #=================================================
-ynh_script_progression --message="Updating the configuration file..." --weight=1
+# UPDATE A CONFIG FILE
+#=================================================
+ynh_script_progression --message="Updating a configuration file..." --weight=1
 
 domain=$new_domain
 path_url=$new_path
 
-ynh_secure_remove --file="$final_path/build/config/options.yml"
-ynh_add_config --template="options.yml" --destination="$final_path/build/config/options.yml"
-chmod 400 "$final_path/build/config/options.yml"
-chown $app:$app "$final_path/build/config/options.yml"
+ynh_add_config --template="options.yml" --destination="$final_path/live/config/options.yml"
 
-#=================================================
+chmod 400 "$final_path/live/config/options.yml"
+chown $app:$app "$final_path/live/config/options.yml"
 
 #=================================================
 # GENERIC FINALISATION
@@ -132,7 +132,8 @@ chown $app:$app "$final_path/build/config/options.yml"
 #=================================================
 ynh_script_progression --message="Starting a systemd service..." --time --weight=1
 
-ynh_systemd_action --service_name=$app --action="start" --log_path="/var/log/$app/$app.log"
+# Start a systemd service
+ynh_systemd_action --service_name=$app --action="start" --log_path="/var/log/$app/$app.log" --line_match="http: starting web server at"
 
 #=================================================
 # RELOAD NGINX
