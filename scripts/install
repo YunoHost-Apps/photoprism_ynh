@@ -7,8 +7,6 @@
 #=================================================
 
 source _common.sh
-source ynh_install_go
-source ynh_add_swap
 source /usr/share/yunohost/helpers
 
 #=================================================
@@ -16,8 +14,7 @@ source /usr/share/yunohost/helpers
 #=================================================
 
 ynh_clean_setup () {
-	### Remove this function if there's nothing to clean before calling the remove script.
-	true
+	ynh_clean_check_starting
 }
 # Exit if an error occurs during the execution of the script
 ynh_abort_if_errors
@@ -43,8 +40,7 @@ fi
 #=================================================
 # CHECK IF THE APP CAN BE INSTALLED WITH THESE ARGS
 #=================================================
-
-ynh_script_progression --message="Validating installation parameters..." --time --weight=1
+ynh_script_progression --message="Validating installation parameters..."
 
 final_path=/var/www/$app
 test ! -e "$final_path" || ynh_die --message="This path already contains a folder"
@@ -55,11 +51,11 @@ ynh_webpath_register --app=$app --domain=$domain --path_url=$path_url
 #=================================================
 # STORE SETTINGS FROM MANIFEST
 #=================================================
-ynh_script_progression --message="Storing installation settings..." --time --weight=1
+ynh_script_progression --message="Storing installation settings..."
 
 ynh_app_setting_set --app=$app --key=domain --value=$domain
 ynh_app_setting_set --app=$app --key=path --value=$path_url
-ynh_app_setting_set --app=$app --key=language --value=$language_key
+ynh_app_setting_set --app=$app --key=language_key --value=$language_key
 ynh_app_setting_set --app=$app --key=password --value=$password
 
 #=================================================
@@ -67,45 +63,23 @@ ynh_app_setting_set --app=$app --key=password --value=$password
 #=================================================
 # FIND AND OPEN A PORT
 #=================================================
-ynh_script_progression --message="Finding an available port..." --time --weight=1
+ynh_script_progression --message="Finding an available port..."
 
 # Find an available port
-port=$(ynh_find_port --port=2342)
+port=$(ynh_find_port --port=8095)
 ynh_app_setting_set --app=$app --key=port --value=$port
 
 #=================================================
 # INSTALL DEPENDENCIES
 #=================================================
-ynh_script_progression --message="Installing dependencies..." --time --weight=1
+ynh_script_progression --message="Installing dependencies..."
 
 ynh_install_app_dependencies $pkg_dependencies
-
-# Install nodejs
-ynh_install_nodejs --nodejs_version=$NODEJS_VERSION 2>&1
-
-# Install go
-ynh_exec_warn_less ynh_install_go --go_version=$GO_VERSION
-
-#=================================================
-# ADD SWAP IF NEEDED
-#=================================================
-ynh_script_progression --message="Adding swap is needed..."
-
-total_memory=$(ynh_get_ram --total)
-swap_needed=0
-
-if [ $total_memory -lt $MEMORY_NEEDED ]; then
-	# Need a minimum of 2.5Go of memory
-	swap_needed=$(($MEMORY_NEEDED - $total_memory))
-fi
-
-ynh_script_progression --message="Adding $swap_needed Mo to swap..."
-ynh_add_swap --size=$swap_needed
 
 #=================================================
 # CREATE DEDICATED USER
 #=================================================
-ynh_script_progression --message="Configuring system user..." --time --weight=1
+ynh_script_progression --message="Configuring system user..."
 
 # Create a system user
 ynh_system_user_create --username=$app --home_dir="$final_path"
@@ -113,7 +87,7 @@ ynh_system_user_create --username=$app --home_dir="$final_path"
 #=================================================
 # CREATE A MYSQL DATABASE
 #=================================================
-ynh_script_progression --message="Creating a MySQL database..." --time --weight=1
+ynh_script_progression --message="Creating a MySQL database..."
 
 db_name=$(ynh_sanitize_dbid --db_name=$app)
 db_user=$db_name
@@ -123,21 +97,11 @@ ynh_mysql_setup_db --db_user=$db_user --db_name=$db_name
 #=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
 #=================================================
-ynh_script_progression --message="Setting up source files..." --time --weight=1
+ynh_script_progression --message="Setting up source files..."
 
 ynh_app_setting_set --app=$app --key=final_path --value=$final_path
 # Download, check integrity, uncompress and patch the source from app.src
-#ynh_setup_source --dest_dir="$final_path"
-
-# I need to use git clone instead of ynh_setup_source
-
-pushd "/var/www/"
-	git clone https://github.com/photoprism/photoprism
-popd
-
-pushd "$final_path"
-	git checkout "$PHOTOPRISM_VERSION" 2>&1
-popd
+ynh_setup_source --dest_dir="$final_path/build/" --source_id="docker-image-extract"
 
 chmod 750 "$final_path"
 chmod -R o-rwx "$final_path"
@@ -146,62 +110,60 @@ chown -R $app:www-data "$final_path"
 #=================================================
 # NGINX CONFIGURATION
 #=================================================
-ynh_script_progression --message="Configuring NGINX web server..." --time --weight=1
+ynh_script_progression --message="Configuring NGINX web server..."
 
 # Create a dedicated NGINX config
 ynh_add_nginx_config
 
 #=================================================
-# BUILD PHOTOPRISM
+# SPECIFIC SETUP
 #=================================================
-ynh_script_progression --message="Building Photoprism..." --time --weight=1
+# MAKE INSTALL
+#=================================================
+ynh_script_progression --message="Making install..."
 
-pushd "$final_path"
-	# Setup go exe and environnement
-	ynh_use_go
-	export GOPATH="$final_path/go"
-	export GOCACHE="$final_path/go/.cache"
-	export GOBIN=$GOPATH/bin
-	# Setup tensorflow library
-	./scripts/dist/install-tensorflow.sh
-	# Setup node environment
-	export NODE_OPTIONS=--max_old_space_size=1024
-	# Build server from source
-	ynh_use_nodejs
-	env "$ynh_node_load_PATH" npm install -g npm
-	env "$ynh_node_load_PATH" make dep-tensorflow dep-js dep-go build-js install DESTDIR=$final_path/build 2>&1
-	ynh_secure_remove --file="$final_path/go"
+# Install photoprism
+pushd $final_path/build
+	./docker-image-extract photoprism/photoprism:$PHOTOPRISM_VERSION
 popd
+mkdir -p "$final_path/live/"
+rsync -a "$final_path/build/output/opt/photoprism/" "$final_path/live/"
+ynh_secure_remove --file="$final_path/build"
+
+chmod 750 "$final_path"
+chmod -R o-rwx "$final_path"
+chown -R $app:$app "$final_path"
 
 #=================================================
 # CREATE DATA DIRECTORY
 #=================================================
-ynh_script_progression --message="Creating a data directory..." --time --weight=1
+ynh_script_progression --message="Creating a data directory..."
 
 datadir=/home/yunohost.app/$app
 ynh_app_setting_set --app=$app --key=datadir --value=$datadir
 
-mkdir -p "$datadir/assets/"
-rsync -a "$final_path/build/assets/" "$datadir/assets/"
+mkdir -p $datadir
+rsync -a "$final_path/live/assets/" "$datadir/assets/"
+ynh_secure_remove --file="$final_path/live/assets/"
 
 chmod 750 "$datadir"
 chmod -R o-rwx "$datadir"
 chown -R $app:www-data "$datadir"
 
-
 #=================================================
 # ADD A CONFIGURATION
 #=================================================
-ynh_script_progression --message="Adding a configuration file..." --time --weight=1
+ynh_script_progression --message="Adding a configuration file..."
 
-ynh_add_config --template="options.yml" --destination="$final_path/build/config/options.yml"
-chmod 400 "$final_path/build/config/options.yml"
-chown $app:$app "$final_path/build/config/options.yml"
+ynh_add_config --template="../conf/options.yml" --destination="$final_path/live/config/options.yml"
+
+chmod 400 "$final_path/live/config/options.yml"
+chown $app:$app "$final_path/live/config/options.yml"
 
 #=================================================
 # SETUP SYSTEMD
 #=================================================
-ynh_script_progression --message="Configuring a systemd service..." --time --weight=1
+ynh_script_progression --message="Configuring a systemd service..."
 
 # Create a dedicated systemd config
 ynh_add_systemd_config
@@ -211,7 +173,7 @@ ynh_add_systemd_config
 #=================================================
 # SETUP LOGROTATE
 #=================================================
-ynh_script_progression --message="Configuring log rotation..." --time --weight=1
+ynh_script_progression --message="Configuring log rotation..."
 
 # Use logrotate to manage application logfile(s)
 ynh_use_logrotate
@@ -219,22 +181,22 @@ ynh_use_logrotate
 #=================================================
 # INTEGRATE SERVICE IN YUNOHOST
 #=================================================
-ynh_script_progression --message="Integrating service in YunoHost..." --time --weight=1
+ynh_script_progression --message="Integrating service in YunoHost..."
 
 yunohost service add $app --description="AI-Powered Photos App for the Decentralized Web" --log="/var/log/$app/$app.log"
 
 #=================================================
 # START SYSTEMD SERVICE
 #=================================================
-ynh_script_progression --message="Starting a systemd service..." --time --weight=1
+ynh_script_progression --message="Starting a systemd service..."
 
 # Start a systemd service
-ynh_systemd_action --service_name=$app --action="start" --log_path="/var/log/$app/$app.log"
+ynh_systemd_action --service_name=$app --action="start" --log_path="/var/log/$app/$app.log" --line_match="http: starting web server at"
 
 #=================================================
 # SETUP SSOWAT
 #=================================================
-ynh_script_progression --message="Configuring permissions..." --time --weight=1
+ynh_script_progression --message="Configuring permissions..."
 
 # Make app public if necessary
 if [ $is_public -eq 1 ]
@@ -247,7 +209,7 @@ fi
 #=================================================
 # RELOAD NGINX
 #=================================================
-ynh_script_progression --message="Reloading NGINX web server..." --time --weight=1
+ynh_script_progression --message="Reloading NGINX web server..."
 
 ynh_systemd_action --service_name=nginx --action=reload
 
@@ -255,4 +217,4 @@ ynh_systemd_action --service_name=nginx --action=reload
 # END OF SCRIPT
 #=================================================
 
-ynh_script_progression --message="Installation of $app completed" --time --last
+ynh_script_progression --message="Installation of $app completed"
