@@ -18,7 +18,7 @@
     },
     "license": "AGPL-3.0-only",
     "maintainer": {
-        "name": "Raoul de Limezy"
+        "name": "Thovi98"
     },
     "requirements": {
         "yunohost": ">= 4.3.0"
