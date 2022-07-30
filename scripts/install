@@ -157,7 +157,7 @@ ynh_script_progression --message="Adding a configuration file..."
 
 ynh_add_config --template="../conf/options.yml" --destination="$final_path/live/config/options.yml"
 
-chmod 400 "$final_path/live/config/options.yml"
+chmod 600 "$final_path/live/config/options.yml"
 chown $app:$app "$final_path/live/config/options.yml"
 
 #=================================================
@@ -191,7 +191,7 @@ yunohost service add $app --description="AI-Powered Photos App for the Decentral
 ynh_script_progression --message="Starting a systemd service..."
 
 # Start a systemd service
-ynh_systemd_action --service_name=$app --action="start" --log_path="/var/log/$app/$app.log" --line_match="http: starting web server at"
+ynh_exec_warn_less ynh_systemd_action --service_name=$app --action="start" --log_path="/var/log/$app/$app.log" --line_match="http: starting web server at"
 
 #=================================================
 # SETUP SSOWAT
