@@ -5,6 +5,9 @@
     * Photoprism currently supports only one user. OIDC should be supported within a few months
     * Photoprism requires an important amount of RAM and disk to install or to work properly
 
+* All data is stored in `/home/yunohost.app/photoprism/photos/`
+    * Be careful, this data is not backed-up by default when doing a backup
+
 * At first install, you'll be prompted for credentials
     * Username is "admin"
     * Password is the password you have set during the installation
