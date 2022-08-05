@@ -15,19 +15,19 @@ Si vous n'avez pas YunoHost, regardez [ici](https://yunohost.org/#/install) pour
 
 ## Vue d'ensemble
 
-PhotoPrism® is an AI-Powered Photos App for the Decentralized Web. It makes use of the latest technologies to tag and find pictures automatically without getting in your way. You can run it at home, on a private server, or in the cloud.
+PhotoPrism® est une application de photos alimentée par l'IA pour le Web décentralisé. Elle utilise les dernières technologies pour étiqueter et trouver des photos automatiquement, sans se mettre en travers de votre chemin. Vous pouvez l'utiliser chez vous, sur un serveur privé ou dans le nuage.
 
-### Features
+### Fonctionnalités
 
-- Browse all your photos and videos without worrying about RAW conversion, duplicates or video formats
-- Easily find specific pictures using powerful search filters
-- Includes four high-resolution world maps to bring back the memories of your favorite trips
-- Play Live Photos™ by hovering over them in albums and search results
-- Recognizes the faces of your family and friends
-- Automatic classification of pictures based on their content and location
+- Parcourez toutes vos photos et vidéos sans vous soucier de la conversion RAW, des doublons ou des formats vidéo
+- Retrouvez facilement des photos spécifiques grâce à des filtres de recherche puissants
+- Inclut quatre cartes du monde en haute résolution pour raviver les souvenirs de vos voyages préférés
+- Lancez les Photos Live™ en les survolant dans les albums et les résultats de recherche
+- Reconnaît les visages de votre famille et de vos amis
+- Classification automatique des photos en fonction de leur contenu et de leur emplacement
 
 
-**Version incluse :** 2022.06.17~ynh1
+**Version incluse :** 2022.07.30~ynh1
 
 **Démo :** https://demo-fr.photoprism.app
 
@@ -37,16 +37,19 @@ PhotoPrism® is an AI-Powered Photos App for the Decentralized Web. It makes use
 
 ## Avertissements / informations importantes
 
-* Known limitations:
-    * Although reaching level 7, Photoprism hasn't yet been extensively tested in real conditions
-    * Please use with **extreme care** if you install it on a test server !
-    * Not tested yet with AMD architecture
-    * Photoprism currently supports only one user. OIDC should be supported within a few months
-    * Photoprism requires an important amount of RAM and disk to install or to work properly
+* Limites connues :
+    * Bien qu'ayant atteint le niveau 7, Photoprism n'a pas encore été testé de manière approfondie en conditions réelles.
+    * Veuillez l'utiliser avec **extrême prudence** si vous l'installez sur un serveur de test !
+    * Pas encore testé avec l'architecture AMD
+    * Photoprism ne supporte actuellement qu'un seul utilisateur. OIDC devrait être supporté d'ici quelques mois.
+    * Photoprism nécessite une quantité importante de RAM et de disque pour être installé et fonctionner correctement.
 
-* At first install, you'll be prompted for credentials
-    * Username is "admin"
-    * Password is the password you have set during the installation
+* Les données sont stockées dans `/home/yunohost.app/photoprism/photos/`
+    * Attention, ces données ne sont pas sauvegardées par défaut lorsqu'une sauvegarde est lancée
+
+* Lors de la première installation, il vous sera demandé de fournir des informations d'identification.
+    * Le nom d'utilisateur est "admin".
+    * Le mot de passe est celui que vous avez défini lors de l'installation.
 
 ## Documentations et ressources
 
