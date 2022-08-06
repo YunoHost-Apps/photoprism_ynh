@@ -11,6 +11,9 @@ ExecStart=__FINALPATH__/live/bin/photoprism --config-path __FINALPATH__/live/con
 StandardOutput=append:/var/log/__APP__/__APP__.log
 StandardError=inherit
 TimeoutSec=900
+Environment="PHOTOPRISM_HEIFCONVERT_BIN=__FINALPATH__/bin/heif-convert"
+Environment="PHOTOPRISM_FFMPEG_BIN=/usr/bin/ffmpeg"
+Environment="PHOTOPRISM_EXIFTOOL_BIN=/usr/bin/exiftool"
 
 # Sandboxing options to harden security
 # Depending on specificities of your service/app, you may need to tweak these 
