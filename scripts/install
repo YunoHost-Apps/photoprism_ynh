@@ -206,6 +206,9 @@ then
 	ynh_permission_update --permission="main" --add="visitors"
 fi
 
+# Permission to make link-sharing work
+ynh_permission_create --permission="sharing" --url="/s" --allowed="visitors" --show_tile="false" --protected="true"
+
 #=================================================
 # RELOAD NGINX
 #=================================================

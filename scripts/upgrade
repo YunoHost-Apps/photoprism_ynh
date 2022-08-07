@@ -70,6 +70,11 @@ if [ -z "$language_key" ]; then
 	ynh_app_setting_delete --app=$app --key=language
 fi
 
+# Create sharing permission if needed
+if ! ynh_permission_exists --permission="sharing"; then
+	ynh_permission_create --permission="sharing" --url="/s" --allowed="visitors" --show_tile="false" --protected="true"
+fi
+
 #=================================================
 # CREATE DEDICATED USER
 #=================================================
