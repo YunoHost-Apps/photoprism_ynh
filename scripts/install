@@ -124,6 +124,7 @@ ynh_script_progression --message="Making install..."
 
 # Install photoprism
 pushd $final_path/build
+        detect_arch
 	./docker-image-extract photoprism/photoprism:$PHOTOPRISM_VERSION
 popd
 mkdir -p "$final_path/live/"
