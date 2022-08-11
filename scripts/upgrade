@@ -157,10 +157,10 @@ chown -R $app:www-data "$datadir"
 #=================================================
 ynh_script_progression --message="Updating a configuration file..."
 
-ynh_add_config --template="../conf/options.yml" --destination="$final_path/live/config/options.yml"
+ynh_add_config --template="../conf/.env" --destination="$final_path/.env"
 
-chmod 600 "$final_path/live/config/options.yml"
-chown $app:$app "$final_path/live/config/options.yml"
+chmod 600 "$final_path/.env"
+chown $app:$app "$final_path/.env"
 
 #=================================================
 # SETUP SYSTEMD
