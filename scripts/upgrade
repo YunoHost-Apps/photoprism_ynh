@@ -70,6 +70,11 @@ if [ -z "$language_key" ]; then
 	ynh_app_setting_delete --app=$app --key=language
 fi
 
+# Create sharing permission if needed
+if ! ynh_permission_exists --permission="sharing"; then
+	ynh_permission_create --permission="sharing" --url="/s" --allowed="visitors" --show_tile="false" --protected="true"
+fi
+
 #=================================================
 # CREATE DEDICATED USER
 #=================================================
@@ -153,10 +158,10 @@ chown -R $app:www-data "$datadir"
 #=================================================
 ynh_script_progression --message="Updating a configuration file..."
 
-ynh_add_config --template="../conf/options.yml" --destination="$final_path/live/config/options.yml"
+ynh_add_config --template="../conf/.env" --destination="$final_path/.env"
 
-chmod 600 "$final_path/live/config/options.yml"
-chown $app:$app "$final_path/live/config/options.yml"
+chmod 600 "$final_path/.env"
+chown $app:$app "$final_path/.env"
 
 #=================================================
 # SETUP SYSTEMD
