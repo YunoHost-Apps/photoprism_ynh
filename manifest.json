@@ -21,7 +21,7 @@
         "name": "Thovi98"
     },
     "requirements": {
-        "yunohost": ">= 11.0.7"
+        "yunohost": ">= 11.0.9.11"
     },
     "multi_instance": true,
     "services": [
