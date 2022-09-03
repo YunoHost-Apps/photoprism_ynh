@@ -7,15 +7,15 @@
 function detect_arch() {
   case "$YNH_ARCH" in
     "amd64")
-      PHOTOPRISM_VERSION="sha256:2a2fc58d5bf77642424854158a06713ce532026bd18a43e07fd71d75365cb8d3"
+      PHOTOPRISM_VERSION="sha256:3381d40181ecdf62932e9530c6b81e6e0f8828a3d373d8dedf662aab96dafba4"
       ;;
 
     "arm64")
-      PHOTOPRISM_VERSION="sha256:ad6de95e77e90a64487085b55dbdbea21c04aff5a17ca3c8790d1deae19b9ee1"
+      PHOTOPRISM_VERSION="sha256:3dcffda0a2b58c91479c883205025edee4ea799fc35be419f9bec708ccb54b7f"
       ;;
 
     "armhf")
-      PHOTOPRISM_VERSION="sha256:4e0b39a06e0f7ecd11aa8cbd84c739cba3417c99348f52e3433cdeaeeb5474cb"
+      PHOTOPRISM_VERSION="sha256:a74f4d0a220af9a5291307bfba36f662d97c4df143f04d951e3c30111916317e"
       ;;
 
     *)
