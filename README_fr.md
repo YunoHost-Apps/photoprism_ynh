@@ -27,7 +27,7 @@ PhotoPrism® est une application de photos alimentée par l'IA pour le Web déce
 - Classification automatique des photos en fonction de leur contenu et de leur emplacement
 
 
-**Version incluse :** 2022.09.01~ynh1
+**Version incluse :** 2022.09.01~ynh2
 
 
 **Démo :** https://demo-fr.photoprism.app
