@@ -13,9 +13,9 @@ TemporaryFileSystem=/:ro
 # Manually mount what is needed for the service to run
 # Ref: https://www.sherbers.de/use-temporaryfilesystem-to-hide-files-or-directories-from-systemd-services/
 
-BindReadOnlyPaths=/lib/ -/lib64/ /usr/lib/ /usr/lib64/ /etc/ld.so.cache /etc/ld.so.conf /etc/ld.so.conf.d/ /etc/bindresvport.blacklist /usr/share/zoneinfo/ /usr/share/locale/ /etc/localtime /usr/share/common-licenses/ /etc/ssl/certs/ /etc/alternatives/
-BindReadOnlyPaths=/dev/log /run/systemd/journal/socket /run/systemd/journal/stdout /run/systemd/notify
-BindPaths=/var/www/photoprism /var/www/photoprism/live/bin /home/yunohost.app/photoprism /usr /etc /var /home /dev /etc /usr /media /mnt /opt /proc /run /srv /sys /tmp
+BindReadOnlyPaths=-/lib/ -/lib64/ -/usr/lib/ -/usr/lib64/ -/etc/ld.so.cache -/etc/ld.so.conf -/etc/ld.so.conf.d/ -/etc/bindresvport.blacklist -/usr/share/zoneinfo/ -/usr/share/locale/ -/etc/localtime -/usr/share/common-licenses/ -/etc/ssl/certs/ -/etc/alternatives/
+BindReadOnlyPaths=-/dev/log -/run/systemd/journal/socket -/run/systemd/journal/stdout -/run/systemd/notify
+BindPaths=/var/www/photoprism /var/www/photoprism/live/bin /home/yunohost.app/photoprism -/usr -/etc -/var -/home -/dev -/etc -/media -/mnt -/opt -/proc -/run -/srv -/sys -/tmp
 
 EnvironmentFile=__FINALPATH__/.env
 WorkingDirectory=__FINALPATH__/live/bin
