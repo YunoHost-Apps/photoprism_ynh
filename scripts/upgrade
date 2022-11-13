@@ -164,6 +164,16 @@ chmod 600 "$final_path/.env"
 chown $app:$app "$final_path/.env"
 
 #=================================================
+# RUNNNING DB MIGRATIONS
+#=================================================
+ynh_script_progression --message="Running database migrations..."
+
+# Reset users table (after 2022.11.03)
+# TODO : add a switch not to run the migration in other cases
+
+ynh_exec_warn_less "$final_path/live/photoprism" users reset --yes
+
+#=================================================
 # SETUP SYSTEMD
 #=================================================
 ynh_script_progression --message="Upgrading systemd configuration..."
