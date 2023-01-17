@@ -171,7 +171,7 @@ ynh_script_progression --message="Running database migrations..."
 # Reset users table (after 2022.11.03)
 # TODO : add a switch not to run the migration in other cases
 
-# ynh_exec_warn_less $final_path/live/bin/photoprism users reset --yes
+ynh_exec_warn_less $final_path/live/bin/photoprism --assets-path=/home/yunohost.app/photoprism/assets --originals-path=/home/yunohost.app/photoprism/photos/originals --import-path=/home/yunohost.app/photoprism/photos/import users reset --yes
 
 #=================================================
 # SETUP SYSTEMD
