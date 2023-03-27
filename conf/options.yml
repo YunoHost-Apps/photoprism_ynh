@@ -5,7 +5,7 @@ CachePath: /home/yunohost.app/__APP__/cache
 OriginalsPath: /home/yunohost.app/__APP__/photos/originals
 ImportPath: /home/yunohost.app/__APP__/photos/import
 TempPath: /home/yunohost.app/__APP__/temp
-SiteUrl: https://__DOMAIN____PATH_URL__
+SiteUrl: https://__DOMAIN____PATH__
 AdminPassword: __PASSWORD__
 HttpServerHost: 127.0.0.1
 HttpMode: release
