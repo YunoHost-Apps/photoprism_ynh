@@ -21,7 +21,7 @@ fund = "https://www.photoprism.app/membership"
 
 [integration]
 yunohost = ">= 11.1.15"
-architectures = ["amd64", "arm64" "armhf"]
+architectures = ["amd64", "arm64", "armhf"]
 multi_instance = true
 ldap = false 
 sso = false 
