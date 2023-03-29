@@ -32,7 +32,7 @@ ynh_app_setting_set --app=$app --key=language_key --value=$language_key
 ynh_script_progression --message="Setting up source files..."
 
 # Download, check integrity, uncompress and patch the source from app.src
-ynh_setup_source
+
 
 chmod 750 "$install_dir"
 chmod -R o-rwx "$install_dir"
@@ -54,10 +54,7 @@ ynh_add_nginx_config
 ynh_script_progression --message="Making install..."
 
 Install photoprism
-pushd $install_dir/build
-      detect_arch
-	  	./docker-image-extract photoprism/photoprism:$PHOTOPRISM_VERSION
-popd
+ynh_setup_source --dest_dir="$final_path/build"
 
 mkdir -p "$install_dir/live/"
 rsync -a "$install_dir/build/output/opt/photoprism/" "$install_dir/live/"
