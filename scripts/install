@@ -53,7 +53,6 @@ ynh_add_nginx_config
 #=================================================
 ynh_script_progression --message="Making install..."
 
-Install photoprism
 ynh_setup_source --dest_dir="$final_path/build"
 
 mkdir -p "$install_dir/live/"
