@@ -114,10 +114,10 @@ ynh_add_nginx_config
 ynh_script_progression --message="Making install..."
 
 # Install photoprism
-pushd $install_dir/build
-        detect_arch
-	./docker-image-extract photoprism/photoprism:$PHOTOPRISM_VERSION
-popd
+# pushd $install_dir/build
+ #       detect_arch
+#	./docker-image-extract photoprism/photoprism:$PHOTOPRISM_VERSION
+#popd
 mkdir -p "$install_dir/live/"
 rsync -a "$install_dir/build/output/opt/photoprism/" "$install_dir/live/"
 #REMOVEME? ynh_secure_remove --file="$install_dir/build"
