@@ -61,7 +61,7 @@ ram.runtime = "50M" # FIXME: replace with an **estimate** minimum ram requiremen
         url = "https://hub.docker.com/layers/photoprism/photoprism/220901-bullseye/images/sha256-3381d40181ecdf62932e9530c6b81e6e0f8828a3d373d8dedf662aab96dafba4?context=explore"
         format = "docker"
         platform = "linux/amd64"
-        sha256 = "sha256:3381d40181ecdf62932e9530c6b81e6e0f8828a3d373d8dedf662aab96dafba4"
+        sha256 = "bce58aa68677dec456dddcf2c494e316c1d6dbf23f0283a9879b25c2232289f4"
         xtract = true
         in_subdir = true
         #arm64.platform = "linux/arm64"
