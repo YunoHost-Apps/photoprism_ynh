@@ -56,6 +56,13 @@ ynh_script_progression --message="Making install..."
 ynh_setup_source --dest_dir="$install_dir/build"
 
 mkdir -p "$install_dir/live/"
+
+ls -lah "$install_dir/"
+ls -lah "$install_dir/build/"
+ls -lah "$install_dir/build/output/"
+ls -lah "$install_dir/build/output/opt/"
+ls -lah "$install_dir/build/output/opt/photoprism/"
+
 rsync -a "$install_dir/build/output/opt/photoprism/" "$install_dir/live/"
 ynh_secure_remove --file="$install_dir/build"
 
