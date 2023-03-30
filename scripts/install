@@ -61,11 +61,9 @@ ls -lah "$install_dir/"
 ls -lah "$install_dir/build/"
 ls -lah "$install_dir/build/opt/"
 ls -lah "$install_dir/build/photoprism/"
-ls -lah "$install_dir/build/output/"
-ls -lah "$install_dir/build/output/opt/"
-ls -lah "$install_dir/build/output/opt/photoprism/"
 
-rsync -a "$install_dir/build/output/opt/photoprism/" "$install_dir/live/"
+
+rsync -a "$install_dir/build/opt/photoprism/" "$install_dir/live/"
 ynh_secure_remove --file="$install_dir/build"
 
 chmod 750 "$install_dir"
