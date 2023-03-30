@@ -60,6 +60,7 @@ mkdir -p "$install_dir/live/"
 ls -lah "$install_dir/"
 ls -lah "$install_dir/build/"
 ls -lah "$install_dir/build/opt/"
+ls -lah "$install_dir/build/opt/photoprism/"
 ls -lah "$install_dir/build/photoprism/"
 
 
