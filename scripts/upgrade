@@ -46,8 +46,7 @@ if [ "$upgrade_type" == "UPGRADE_APP" ]
 then
 	ynh_script_progression --message="Upgrading source files..."
 
-	# Download, check integrity, uncompress and patch the source from app.src
-	ynh_setup_source --dest_dir="$install_dir/build/"
+	
 fi
 
 chmod 750 "$install_dir"
@@ -72,14 +71,13 @@ ynh_script_progression --message="Making install..."
 
 if [ "$upgrade_type" == "UPGRADE_APP" ]
 then
-	# Install photoprism
-	pushd $install_dir/build
-		detect_arch
-		./docker-image-extract photoprism/photoprism:$PHOTOPRISM_VERSION
-	popd
+	
+	# Download, check integrity, uncompress and patch the source from app.src
+	ynh_setup_source --dest_dir="$install_dir/build/"
+	
 	mkdir -p "$install_dir/live/"
 	rsync -a "$install_dir/build/output/opt/photoprism/" "$install_dir/live/"
-#REMOVEME? 	ynh_secure_remove --file="$install_dir/build"
+	ynh_secure_remove --file="$install_dir/build"
 fi
 
 chmod 750 "$install_dir"
