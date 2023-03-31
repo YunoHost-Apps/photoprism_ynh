@@ -9,10 +9,6 @@
 source _common.sh
 source /usr/share/yunohost/helpers
 
-
-
-
-
 #=================================================
 # STANDARD MODIFICATIONS
 #=================================================
@@ -28,11 +24,6 @@ ynh_systemd_action --service_name=$app --action="stop" --log_path="/var/log/$app
 ynh_script_progression --message="Updating NGINX web server configuration..."
 
 ynh_change_url_nginx_config
-
-
-
-
-
 
 #=================================================
 # SPECIFIC MODIFICATIONS
@@ -58,13 +49,6 @@ ynh_script_progression --message="Starting a systemd service..."
 
 # Start a systemd service
 ynh_exec_warn_less ynh_systemd_action --service_name=$app --action="start" --log_path="/var/log/$app/$app.log" --line_match="http: starting web server at"
-
-#=================================================
-# RELOAD NGINX
-#=================================================
-#REMOVEME? ynh_script_progression --message="Reloading NGINX web server..."
-
-#REMOVEME? #REMOVEME? ynh_systemd_action --service_name=nginx --action=reload
 
 #=================================================
 # END OF SCRIPT
