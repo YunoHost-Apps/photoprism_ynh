@@ -57,16 +57,21 @@ ram.runtime = "50M" # FIXME: replace with an **estimate** minimum ram requiremen
 [resources]
     [resources.sources]
         [resources.sources.main]
-        url = "photoprism/photoprism:220901-bullseye"
         format = "docker"
-        platform = "linux/amd64"
-        sha256 = "3381d40181ecdf62932e9530c6b81e6e0f8828a3d373d8dedf662aab96dafba4"
         extract = true
         prefetch = false
-        #arm64.platform = "linux/arm64"
-        #arm64.sha256 = "sha256:3dcffda0a2b58c91479c883205025edee4ea799fc35be419f9bec708ccb54b7f"
-        #armhf.platform = "linux/armhf"
-        #armhf.sha256 = "sha256:a74f4d0a220af9a5291307bfba36f662d97c4df143f04d951e3c30111916317e"
+
+        amd64.url = "photoprism/photoprism:220901-bullseye"
+        amd64.platform = "linux/amd64"
+        amd64.sha256 = "3381d40181ecdf62932e9530c6b81e6e0f8828a3d373d8dedf662aab96dafba4"
+        
+        arm64.url = "photoprism/photoprism:220901-bullseye"
+        arm64.platform = "linux/arm64"
+        arm64.sha256 = "3dcffda0a2b58c91479c883205025edee4ea799fc35be419f9bec708ccb54b7f"
+
+        armhf.url = "photoprism/photoprism:220901-bullseye"
+        armhf.platform = "linux/armhf"
+        armhf.sha256 = "a74f4d0a220af9a5291307bfba36f662d97c4df143f04d951e3c30111916317e"
   
 
 
