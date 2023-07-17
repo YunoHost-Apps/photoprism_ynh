@@ -5,7 +5,8 @@ It shall NOT be edited by hand.
 
 # Photoprism for YunoHost
 
-[![Integration level](https://dash.yunohost.org/integration/photoprism.svg)](https://dash.yunohost.org/appci/app/photoprism) ![Working status](https://ci-apps.yunohost.org/ci/badges/photoprism.status.svg) ![Maintenance status](https://ci-apps.yunohost.org/ci/badges/photoprism.maintain.svg)  
+[![Integration level](https://dash.yunohost.org/integration/photoprism.svg)](https://dash.yunohost.org/appci/app/photoprism) ![Working status](https://ci-apps.yunohost.org/ci/badges/photoprism.status.svg) ![Maintenance status](https://ci-apps.yunohost.org/ci/badges/photoprism.maintain.svg)
+
 [![Install Photoprism with YunoHost](https://install-app.yunohost.org/install-with-yunohost.svg)](https://install-app.yunohost.org/?app=photoprism)
 
 *[Lire ce readme en français.](./README_fr.md)*
@@ -27,29 +28,13 @@ PhotoPrism® is an AI-Powered Photos App for the Decentralized Web. It makes use
 - Automatic classification of pictures based on their content and location
 
 
-**Shipped version:** 2022.09.01~ynh3
-
+**Shipped version:** 2022.09.01~ynh4
 
 **Demo:** https://demo-fr.photoprism.app
 
 ## Screenshots
 
 ![Screenshot of Photoprism](./doc/screenshots/photoprism.jpg)
-
-## Disclaimers / important information
-
-* Known limitations:
-    * Although reaching level 7, Photoprism hasn't yet been extensively tested in real conditions
-    * Please use with **extreme care** if you install it on a test server !
-    * Photoprism currently supports only one user. OIDC should be supported within a few months
-    * Photoprism requires an important amount of RAM and disk to install or to work properly
-
-* All data is stored in `/home/yunohost.app/photoprism/photos/`
-    * Be careful, this data is not backed-up by default when doing a backup
-
-* At first install, you'll be prompted for credentials
-    * Username is "admin"
-    * Password is the password you have set during the installation
 
 ## Documentation and resources
 

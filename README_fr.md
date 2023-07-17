@@ -5,15 +5,16 @@ It shall NOT be edited by hand.
 
 # Photoprism pour YunoHost
 
-[![Niveau d'intégration](https://dash.yunohost.org/integration/photoprism.svg)](https://dash.yunohost.org/appci/app/photoprism) ![Statut du fonctionnement](https://ci-apps.yunohost.org/ci/badges/photoprism.status.svg) ![Statut de maintenance](https://ci-apps.yunohost.org/ci/badges/photoprism.maintain.svg)  
+[![Niveau d’intégration](https://dash.yunohost.org/integration/photoprism.svg)](https://dash.yunohost.org/appci/app/photoprism) ![Statut du fonctionnement](https://ci-apps.yunohost.org/ci/badges/photoprism.status.svg) ![Statut de maintenance](https://ci-apps.yunohost.org/ci/badges/photoprism.maintain.svg)
+
 [![Installer Photoprism avec YunoHost](https://install-app.yunohost.org/install-with-yunohost.svg)](https://install-app.yunohost.org/?app=photoprism)
 
 *[Read this readme in english.](./README.md)*
 
-> *Ce package vous permet d'installer Photoprism rapidement et simplement sur un serveur YunoHost.
-Si vous n'avez pas YunoHost, regardez [ici](https://yunohost.org/#/install) pour savoir comment l'installer et en profiter.*
+> *Ce package vous permet d’installer Photoprism rapidement et simplement sur un serveur YunoHost.
+Si vous n’avez pas YunoHost, regardez [ici](https://yunohost.org/#/install) pour savoir comment l’installer et en profiter.*
 
-## Vue d'ensemble
+## Vue d’ensemble
 
 PhotoPrism® est une application de photos alimentée par l'IA pour le Web décentralisé. Elle utilise les dernières technologies pour étiqueter et trouver des photos automatiquement, sans se mettre en travers de votre chemin. Vous pouvez l'utiliser chez vous, sur un serveur privé ou dans le nuage.
 
@@ -27,36 +28,20 @@ PhotoPrism® est une application de photos alimentée par l'IA pour le Web déce
 - Classification automatique des photos en fonction de leur contenu et de leur emplacement
 
 
-**Version incluse :** 2022.09.01~ynh3
-
+**Version incluse :** 2022.09.01~ynh4
 
 **Démo :** https://demo-fr.photoprism.app
 
-## Captures d'écran
+## Captures d’écran
 
-![Capture d'écran de Photoprism](./doc/screenshots/photoprism.jpg)
-
-## Avertissements / informations importantes
-
-* Limites connues :
-    * Bien qu'ayant atteint le niveau 7, Photoprism n'a pas encore été testé de manière approfondie en conditions réelles.
-    * Veuillez l'utiliser avec **extrême prudence** si vous l'installez sur un serveur de test !
-    * Photoprism ne supporte actuellement qu'un seul utilisateur. OIDC devrait être supporté d'ici quelques mois.
-    * Photoprism nécessite une quantité importante de RAM et de disque pour être installé et fonctionner correctement.
-
-* Les données sont stockées dans `/home/yunohost.app/photoprism/photos/`
-    * Attention, ces données ne sont pas sauvegardées par défaut lorsqu'une sauvegarde est lancée
-
-* Lors de la première installation, il vous sera demandé de fournir des informations d'identification.
-    * Le nom d'utilisateur est "admin".
-    * Le mot de passe est celui que vous avez défini lors de l'installation.
+![Capture d’écran de Photoprism](./doc/screenshots/photoprism.jpg)
 
 ## Documentations et ressources
 
-* Site officiel de l'app : <https://photoprism.app>
+* Site officiel de l’app : <https://photoprism.app>
 * Documentation officielle utilisateur : <https://docs.photoprism.app/user-guide/>
-* Documentation officielle de l'admin : <https://docs.photoprism.app/developer-guide/>
-* Dépôt de code officiel de l'app : <https://github.com/photoprism/photoprism>
+* Documentation officielle de l’admin : <https://docs.photoprism.app/developer-guide/>
+* Dépôt de code officiel de l’app : <https://github.com/photoprism/photoprism>
 * Documentation YunoHost pour cette app : <https://yunohost.org/app_photoprism>
 * Signaler un bug : <https://github.com/YunoHost-Apps/photoprism_ynh/issues>
 
@@ -72,4 +57,4 @@ ou
 sudo yunohost app upgrade photoprism -u https://github.com/YunoHost-Apps/photoprism_ynh/tree/testing --debug
 ```
 
-**Plus d'infos sur le packaging d'applications :** <https://yunohost.org/packaging_apps>
+**Plus d’infos sur le packaging d’applications :** <https://yunohost.org/packaging_apps>
