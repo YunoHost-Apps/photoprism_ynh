@@ -19,13 +19,13 @@ code = "https://github.com/photoprism/photoprism"
 fund = "https://www.photoprism.app/membership"
 
 [integration]
-yunohost = ">= 11.1.15"
+yunohost = ">= 11.1.21"
 architectures = ["amd64", "arm64", "armhf"]
 multi_instance = false
-ldap = false 
-sso = false 
+ldap = false
+sso = false
 disk = "50M"
-ram.build = "50M"
+ram.build = "300M"
 ram.runtime = "50M"
 
 [install]
@@ -34,7 +34,7 @@ ram.runtime = "50M"
 
     [install.path]
     type = "path"
-    default = "/example"
+    default = "/photoprism"
 
     [install.init_main_permission]
     help.en = "If enabled, Photoprism will be accessible by mobile apps and by users without a YunoHost account. This can be changed later in the webadmin."
@@ -73,13 +73,12 @@ ram.runtime = "50M"
         armhf.platform = "linux/armhf"
         armhf.sha256 = "a74f4d0a220af9a5291307bfba36f662d97c4df143f04d951e3c30111916317e"
   
-
-
     [resources.system_user]
 
     [resources.install_dir]
 
     [resources.data_dir]
+    subdirs = ["assets"]
 
     [resources.permissions]
     main.url = "/"
