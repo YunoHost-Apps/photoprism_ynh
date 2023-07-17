@@ -17,9 +17,9 @@ BindReadOnlyPaths=-/lib/ -/lib64/ -/usr/lib/ -/usr/lib64/ -/etc/ld.so.cache -/et
 BindReadOnlyPaths=-/dev/log -/run/systemd/journal/socket -/run/systemd/journal/stdout -/run/systemd/notify
 BindPaths=/var/www/photoprism /var/www/photoprism/live/bin /home/yunohost.app/photoprism -/usr -/etc -/var -/home -/dev -/etc -/media -/mnt -/opt -/proc -/run -/srv -/sys -/tmp
 
-EnvironmentFile=__FINALPATH__/.env
-WorkingDirectory=__FINALPATH__/live/bin
-ExecStart=__FINALPATH__/live/bin/photoprism --trace start
+EnvironmentFile=__INSTALL_DIR__/.env
+WorkingDirectory=__INSTALL_DIR__/live/bin
+ExecStart=__INSTALL_DIR__/live/bin/photoprism --trace start
 StandardOutput=append:/var/log/__APP__/__APP__.log
 StandardError=inherit
 TimeoutSec=900

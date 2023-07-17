@@ -1,0 +1,99 @@
+packaging_format = 2
+
+id = "photoprism"
+name = "Photoprism"
+description.en = "AI-Powered Photos App for the Decentralized Web"
+description.fr = "Gestion de photos en ligne"
+
+version = "2022.09.01~ynh4"
+
+maintainers = ["Thovi98"]
+
+[upstream]
+license = "AGPL-3.0-only"
+website = "https://photoprism.app"
+demo = "https://demo-fr.photoprism.app"
+admindoc = "https://docs.photoprism.app/developer-guide/"
+userdoc = "https://docs.photoprism.app/user-guide/"
+code = "https://github.com/photoprism/photoprism"
+fund = "https://www.photoprism.app/membership"
+
+[integration]
+yunohost = ">= 11.1.15"
+architectures = ["amd64", "arm64", "armhf"]
+multi_instance = false
+ldap = false 
+sso = false 
+disk = "50M"
+ram.build = "50M"
+ram.runtime = "50M"
+
+[install]
+    [install.domain]
+    type = "domain"
+
+    [install.path]
+    type = "path"
+    default = "/example"
+
+    [install.init_main_permission]
+    help.en = "If enabled, Photoprism will be accessible by mobile apps and by users without a YunoHost account. This can be changed later in the webadmin."
+    help.fr = "Si cette case est cochée, Photoprism sera accessible par des applications mobiles et par les utilisateurs n’ayant pas de compte YunoHost. Vous pourrez changer cela dans la webadmin."
+    type = "group"
+    default = "visitors"
+
+    [install.language]
+    ask.en = "Choose the application language"
+    ask.fr = "Choisissez la langue de l'application"
+    type = "string"
+    choices = ["fr", "en"]
+    default = "fr"
+
+    [install.password]
+    help.en = "Photoprism currently supports only one user : admin. Choose a password here."
+    help.fr = "Photoprism ne permet qu'un seul utilisateur pour le moment. Choisissez un mot de passe ici."
+    type = "password"
+
+[resources]
+    [resources.sources]
+        [resources.sources.main]
+        format = "docker"
+        extract = true
+        prefetch = false
+
+        amd64.url = "photoprism/photoprism:220901-bullseye"
+        amd64.platform = "linux/amd64"
+        amd64.sha256 = "3381d40181ecdf62932e9530c6b81e6e0f8828a3d373d8dedf662aab96dafba4"
+        
+        arm64.url = "photoprism/photoprism:220901-bullseye"
+        arm64.platform = "linux/arm64"
+        arm64.sha256 = "3dcffda0a2b58c91479c883205025edee4ea799fc35be419f9bec708ccb54b7f"
+
+        armhf.url = "photoprism/photoprism:220901-bullseye"
+        armhf.platform = "linux/armhf"
+        armhf.sha256 = "a74f4d0a220af9a5291307bfba36f662d97c4df143f04d951e3c30111916317e"
+  
+
+
+    [resources.system_user]
+
+    [resources.install_dir]
+
+    [resources.data_dir]
+
+    [resources.permissions]
+    main.url = "/"
+
+    sharing.url = "/s"
+    sharing.allowd = "visitors"
+    sharing.show_tile = false
+    sharing.protected = true
+
+    [resources.ports]
+    main.default = 8095
+
+    [resources.apt]
+    packages = "libc6-dev, libssl-dev, libxft-dev, libhdf5-serial-dev, libpng-dev, libheif-examples, librsvg2-bin, libx264-dev, libx265-dev, libnss3, libfreetype6, libfreetype6-dev, libfontconfig1, libfontconfig1-dev, libzmq3-dev, ffmpeg, libimage-exiftool-perl, mariadb-server"
+
+    [resources.database]
+    type = "mysql"
