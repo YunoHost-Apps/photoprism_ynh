@@ -33,7 +33,6 @@ ynh_script_progression --message="Setting up source files..."
 
 # Download, check integrity, uncompress and patch the source from app.src
 
-
 chmod 750 "$install_dir"
 chmod -R o-rwx "$install_dir"
 chown -R $app:www-data "$install_dir"
@@ -69,7 +68,7 @@ chown -R $app:$app "$install_dir"
 #=================================================
 ynh_script_progression --message="Creating a data directory..."
 
-mkdir -p $data_dir
+#mkdir -p $data_dir
 rsync -a "$install_dir/live/assets/" "$data_dir/assets/"
 ynh_secure_remove --file="$install_dir/live/assets/"
 
