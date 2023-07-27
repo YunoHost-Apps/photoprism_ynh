@@ -84,7 +84,7 @@ ram.runtime = "50M"
     main.url = "/"
 
     sharing.url = "/s"
-    sharing.allowd = "visitors"
+    sharing.allowed = "visitors"
     sharing.show_tile = false
     sharing.protected = true
 
