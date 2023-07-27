@@ -25,7 +25,7 @@ upgrade_type=$(ynh_check_app_version_changed)
 ynh_script_progression --message="Ensuring downward compatibility..."
 
 # If language_key doesn't exist, create it
-if [ -z "$language_key" ]; then
+if [ -z "${language_key:-}" ]; then
         language_key=$(ynh_app_setting_get --app=$app --key=language)
 	ynh_app_setting_set --app=$app --key=language_key --value=$language_key
 	ynh_app_setting_delete --app=$app --key=language
