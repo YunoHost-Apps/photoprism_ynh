@@ -63,14 +63,11 @@ ram.runtime = "50M"
     extract = true
     prefetch = false
 
-    amd64.url = "photoprism/photoprism:230923"
-    amd64.sha256 = "53c504ee6272cc8ddc6f25d49e621926df25842d87a41bd822fd0637acaa1836"
+    amd64.url = "photoprism/photoprism:230923-ce"
+    amd64.sha256 = "8ec9989f90cd5e4428860e31c722f6fa05a5de74e966c38e7e3b4342e2870f93"
 
-    arm64.url = "photoprism/photoprism:230923"
-    arm64.sha256 = "44eecdf6940d4630683ebb52926028fa27d1f81c4a8aeda0fcb50885407bbbbd"
-
-    armhf.url = "photoprism/photoprism:230719-armv7"
-    armhf.sha256 = "41a714cef0cb9b2d79c21cc00e99673f437c79568f9ccb9e290c06a30463e01b"
+    arm64.url = "photoprism/photoprism:230923-ce"
+    arm64.sha256 = "be255b74d05b740f3b2c48d2232f97b48669d3719b5bbe7f67dce953fa84aaa4"
 
     [resources.system_user]
 
