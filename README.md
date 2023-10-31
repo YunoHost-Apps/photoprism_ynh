@@ -5,7 +5,8 @@ It shall NOT be edited by hand.
 
 # Photoprism for YunoHost
 
-[![Integration level](https://dash.yunohost.org/integration/photoprism.svg)](https://dash.yunohost.org/appci/app/photoprism) ![Working status](https://ci-apps.yunohost.org/ci/badges/photoprism.status.svg) ![Maintenance status](https://ci-apps.yunohost.org/ci/badges/photoprism.maintain.svg)  
+[![Integration level](https://dash.yunohost.org/integration/photoprism.svg)](https://dash.yunohost.org/appci/app/photoprism) ![Working status](https://ci-apps.yunohost.org/ci/badges/photoprism.status.svg) ![Maintenance status](https://ci-apps.yunohost.org/ci/badges/photoprism.maintain.svg)
+
 [![Install Photoprism with YunoHost](https://install-app.yunohost.org/install-with-yunohost.svg)](https://install-app.yunohost.org/?app=photoprism)
 
 *[Lire ce readme en français.](./README_fr.md)*
@@ -28,7 +29,6 @@ PhotoPrism® is an AI-Powered Photos App for the Decentralized Web. It makes use
 
 
 **Shipped version:** 2022.09.01~ynh3
-
 
 **Demo:** https://demo-fr.photoprism.app
 
@@ -57,7 +57,7 @@ PhotoPrism® is an AI-Powered Photos App for the Decentralized Web. It makes use
 * Official user documentation: <https://docs.photoprism.app/user-guide/>
 * Official admin documentation: <https://docs.photoprism.app/developer-guide/>
 * Upstream app code repository: <https://github.com/photoprism/photoprism>
-* YunoHost documentation for this app: <https://yunohost.org/app_photoprism>
+* YunoHost Store: <https://apps.yunohost.org/app/photoprism>
 * Report a bug: <https://github.com/YunoHost-Apps/photoprism_ynh/issues>
 
 ## Developer info
