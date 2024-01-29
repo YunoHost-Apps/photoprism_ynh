@@ -42,7 +42,7 @@ PhotoPrism® est une application de photos alimentée par l'IA pour le Web déce
 * Documentation officielle utilisateur : <https://docs.photoprism.app/user-guide/>
 * Documentation officielle de l’admin : <https://docs.photoprism.app/developer-guide/>
 * Dépôt de code officiel de l’app : <https://github.com/photoprism/photoprism>
-* Documentation YunoHost pour cette app : <https://yunohost.org/app_photoprism>
+* YunoHost Store: <https://apps.yunohost.org/app/photoprism>
 * Signaler un bug : <https://github.com/YunoHost-Apps/photoprism_ynh/issues>
 
 ## Informations pour les développeurs
