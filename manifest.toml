@@ -7,7 +7,7 @@ name = "Photoprism"
 description.en = "AI-Powered Photos App for the Decentralized Web"
 description.fr = "Gestion de photos en ligne"
 
-version = "2022.09.01~ynh4"
+version = "2023.09.23~ynh1"
 
 maintainers = ["Thovi98"]
 
@@ -23,7 +23,7 @@ fund = "https://www.photoprism.app/membership"
 [integration]
 yunohost = ">= 11.2"
 architectures = ["amd64", "arm64", "armhf"]
-multi_instance = false
+multi_instance = true
 ldap = false
 sso = false
 disk = "50M"
@@ -63,14 +63,11 @@ ram.runtime = "50M"
     extract = true
     prefetch = false
 
-    amd64.url = "photoprism/photoprism:220901-bullseye"
-    amd64.sha256 = "3381d40181ecdf62932e9530c6b81e6e0f8828a3d373d8dedf662aab96dafba4"
+    amd64.url = "photoprism/develop:231026-bullseye"
+    amd64.sha256 = "ec866690e5591bab1a6676e098d1febb3e76157308a6c619a2a1db245466007f"
 
-    arm64.url = "photoprism/photoprism:220901-bullseye"
-    arm64.sha256 = "3dcffda0a2b58c91479c883205025edee4ea799fc35be419f9bec708ccb54b7f"
-
-    armhf.url = "photoprism/photoprism:220901-bullseye"
-    armhf.sha256 = "a74f4d0a220af9a5291307bfba36f662d97c4df143f04d951e3c30111916317e"
+    arm64.url = "photoprism/develop:231026-bullseye"
+    arm64.sha256 = "75464e246c8991151878077bbe059dd2e39752fcab911f847458664042fbf2af"
 
     [resources.system_user]
 
