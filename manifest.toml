@@ -68,9 +68,9 @@ ram.runtime = "50M"
     [resources.system_user]
 
     [resources.install_dir]
-
-    [resources.data_dir]
     subdirs = ["assets"]
+    
+    [resources.data_dir]
 
     [resources.permissions]
     main.url = "/"
