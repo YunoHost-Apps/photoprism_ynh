@@ -36,10 +36,10 @@ ynh_script_progression --message="Updating a configuration file..."
 domain=$new_domain
 path=$new_path
 
-ynh_add_config --template="options.yml" --destination="$install_dir/live/config/options.yml"
+ynh_add_config --template="../conf/.env" --destination="$install_dir/.env"
 
-chmod 400 "$install_dir/live/config/options.yml"
-chown $app:$app "$install_dir/live/config/options.yml"
+chmod 400 "$install_dir/.env"
+chown $app:$app "$install_dir/.env"
 
 #=================================================
 # GENERIC FINALISATION

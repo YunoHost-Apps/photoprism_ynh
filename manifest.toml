@@ -21,7 +21,7 @@ code = "https://github.com/photoprism/photoprism"
 fund = "https://www.photoprism.app/membership"
 
 [integration]
-yunohost = ">= 11.2"
+yunohost = ">= 12.0"
 architectures = ["amd64", "arm64", "armhf"]
 multi_instance = false
 ldap = false
@@ -64,6 +64,10 @@ ram.runtime = "50M"
 
         arm64.url = "https://github.com/photoprism/photoprism/releases/download/231128-f48ff16ef/photoprism_231128-f48ff16ef-linux-arm64.tar.gz"
         arm64.sha256 = "2ddc7500d2055fd76bab229920330f25e007ad1e8e3c36ca34ace16bafa16b09"
+
+        autoupdate.strategy = "latest_github_release"
+        autoupdate.asset.amd64 = ".*amd64.tar.gz"
+        autoupdate.asset.arm64 = ".*arm64.tar.gz"
 
     [resources.system_user]
 

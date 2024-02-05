@@ -66,7 +66,7 @@ ynh_script_progression --message="Adding a configuration file..."
 
 ynh_add_config --template="../conf/.env" --destination="$install_dir/.env"
 
-chmod 600 "$install_dir/.env"
+chmod 400 "$install_dir/.env"
 chown $app:$app "$install_dir/.env"
 
 #=================================================
