@@ -5,6 +5,8 @@ packaging_format = 2
 id = "photoprism"
 name = "Photoprism"
 description.en = "AI-Powered Photos App for the Decentralized Web"
+description.gl = "App de Fotos con tecnoloxía IA para a Web Descentralizada"
+description.ca = "Aplicació de fotografia amb IA per la web descentralitzada"
 description.fr = "Gestion de photos en ligne"
 
 version = "2022.09.01~ynh4"
@@ -40,12 +42,16 @@ ram.runtime = "50M"
 
     [install.init_main_permission]
     help.en = "If enabled, Photoprism will be accessible by mobile apps and by users without a YunoHost account. This can be changed later in the webadmin."
+    help.gl = "Se está activado, Photoprism será accesible para apps móbiles e usuarias sen unha conta YunoHost. Podes cambiar isto máis tarde nos axustes de administración."
+    help.ca = "Si ho activeu, Photoprism serà accessible amb aplicacions mòbil i per usuaris sense compte a YunoHost. Es pot canviar més tard a la web d'administració."
     help.fr = "Si cette case est cochée, Photoprism sera accessible par des applications mobiles et par les utilisateurs n’ayant pas de compte YunoHost. Vous pourrez changer cela dans la webadmin."
     type = "group"
     default = "visitors"
 
     [install.language]
     ask.en = "Choose the application language"
+    ask.gl = "Elixe o idioma da aplicación"
+    ask.ca = "Triar l'idioma de l'aplicació"
     ask.fr = "Choisissez la langue de l'application"
     type = "select"
     choices = ["fr", "en"]
@@ -53,6 +59,8 @@ ram.runtime = "50M"
 
     [install.password]
     help.en = "Photoprism currently supports only one user : admin. Choose a password here."
+    help.gl = "Actualmente Photoprism só ten soporte para unha usuaria: admin. Escribe aquí o seu contrasinal."
+    help.ca = "Photoprism només permet un únic usuari de moment: admin. Trieu-ne la contrasenya aquí."
     help.fr = "Photoprism ne permet qu'un seul utilisateur pour le moment. Choisissez un mot de passe ici."
     type = "password"
 
