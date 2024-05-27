@@ -3,7 +3,7 @@
 请勿手动编辑。
 -->
 
-# YunoHost 的 Photoprism
+# YunoHost 上的 Photoprism
 
 [![集成程度](https://dash.yunohost.org/integration/photoprism.svg)](https://dash.yunohost.org/appci/app/photoprism) ![工作状态](https://ci-apps.yunohost.org/ci/badges/photoprism.status.svg) ![维护状态](https://ci-apps.yunohost.org/ci/badges/photoprism.maintain.svg)
 
