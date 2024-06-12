@@ -95,6 +95,22 @@ ram.runtime = "50M"
 
     [resources.apt]
     packages = [
+        "exiftool",
+        "darktable",
+        "rawtherapee",
+        "libheif",
+        "imagemagick",
+        "libvips",
+        "libjxl",
+        "libjxl-tools",
+        "ffmpeg",
+        "libavcodec-extra",
+        "libde265",
+        "libaom",
+        "libvpx",
+        "libwebm",
+        "sqlite3",
+        "tzdata"
         "libc6-dev",
         "libssl-dev",
         "libxft-dev",
@@ -110,7 +126,6 @@ ram.runtime = "50M"
         "libfontconfig1",
         "libfontconfig1-dev",
         "libzmq3-dev",
-        "ffmpeg",
         "libimage-exiftool-perl",
         "mariadb-server",
     ]
