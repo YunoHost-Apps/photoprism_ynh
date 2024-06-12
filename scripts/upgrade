@@ -29,6 +29,11 @@ if [ -z "${language_key:-}" ]; then
 	ynh_app_setting_delete --app=$app --key=language
 fi
 
+if [ -z "${admin:-}" ]; then
+	admin=$admin
+	ynh_app_setting_set --app=$app --key=admin --value=$admin
+fi
+
 #=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
 #=================================================
