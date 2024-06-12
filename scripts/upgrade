@@ -17,7 +17,6 @@ ynh_script_progression --message="Checking version..."
 
 upgrade_type=$(ynh_check_app_version_changed)
 
-
 #=================================================
 # ENSURE DOWNWARD COMPATIBILITY
 #=================================================
@@ -69,8 +68,21 @@ ynh_script_progression --message="Updating a configuration file..."
 
 ynh_add_config --template="../conf/.env" --destination="$install_dir/.env"
 
-chmod 400 "$install_dir/.env"
+chmod 600 "$install_dir/.env"
 chown $app:$app "$install_dir/.env"
+
+#=================================================
+# RUNNNING DB MIGRATIONS
+#=================================================
+ynh_script_progression --message="Running database migrations..."
+
+if ynh_compare_current_package_version --comparison lt --version 2022.09.01~ynh4
+then
+    ynh_exec_warn_less $final_path/live/bin/photoprism \
+		--assets-path=/home/yunohost.app/photoprism/assets \
+		--originals-path=/home/yunohost.app/photoprism/photos/originals \
+		--import-path=/home/yunohost.app/photoprism/photos/import users reset --yes
+fi
 
 #=================================================
 # SETUP SYSTEMD

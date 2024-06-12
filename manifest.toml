@@ -7,7 +7,7 @@ name = "Photoprism"
 description.en = "AI-Powered Photos App for the Decentralized Web"
 description.fr = "Gestion de photos en ligne"
 
-version = "2023.11.28~ynh1"
+version = "2022.09.01~ynh4"
 
 maintainers = ["Thovi98"]
 
@@ -44,6 +44,9 @@ ram.runtime = "50M"
     type = "group"
     default = "visitors"
 
+    [install.admin]
+    type = "user"
+
     [install.language]
     ask.en = "Choose the application language"
     ask.fr = "Choisissez la langue de l'application"
@@ -59,15 +62,19 @@ ram.runtime = "50M"
 [resources]
     [resources.sources]
     [resources.sources.main]
-        amd64.url = "https://github.com/photoprism/photoprism/releases/download/231128-f48ff16ef/photoprism_231128-f48ff16ef-linux-amd64.tar.gz"
-        amd64.sha256 = "4fb91a67191ffff840f2d92f59fde06bc13d0d92f914ff9a31314b598a5a2cbd"
+        amd64.url = "https://github.com/photoprism/photoprism/releases/download/240531-60b3a4628/photoprism_240531-60b3a4628-linux-amd64.tar.gz"
+        amd64.sha256 = "1859df8e95c054fb4ff9c9de80ed0db96a1126f91d3e57946628fa92008229eb"
 
-        arm64.url = "https://github.com/photoprism/photoprism/releases/download/231128-f48ff16ef/photoprism_231128-f48ff16ef-linux-arm64.tar.gz"
-        arm64.sha256 = "2ddc7500d2055fd76bab229920330f25e007ad1e8e3c36ca34ace16bafa16b09"
+        arm64.url = "https://github.com/photoprism/photoprism/releases/download/240531-60b3a4628/photoprism_240531-60b3a4628-linux-arm64.tar.gz"
+        arm64.sha256 = "16d5ef94dd733bd46db49b10c25a019b9510e690d40efee1d691c20a72263044"
+
+        armhf.url = "https://github.com/photoprism/photoprism/releases/download/240531-60b3a4628/photoprism_240531-60b3a4628-linux-arm.tar.gz"
+        armhf.sha256 = "be9f10f8fe65d2cde285d0eafca3067c9f4344eb56cc01566e52f14027f929f2"
 
         autoupdate.strategy = "latest_github_release"
         autoupdate.asset.amd64 = ".*amd64.tar.gz"
         autoupdate.asset.arm64 = ".*arm64.tar.gz"
+        autoupdate.asset.armhf = ".*arm.tar.gz"
 
     [resources.system_user]
 
