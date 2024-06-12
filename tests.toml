@@ -5,3 +5,4 @@ test_format = 1.0
 [default]
 
 test_upgrade_from.fe71ba9.name = "Packaging v1"
+test_upgrade_from.678f0f9.name = "2022.09.01~ynh4"
