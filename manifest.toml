@@ -110,7 +110,7 @@ ram.runtime = "50M"
         "libvpx",
         "libwebm",
         "sqlite3",
-        "tzdata"
+        "tzdata",
         "libc6-dev",
         "libssl-dev",
         "libxft-dev",
