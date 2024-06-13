@@ -7,7 +7,7 @@ name = "Photoprism"
 description.en = "AI-Powered Photos App for the Decentralized Web"
 description.fr = "Gestion de photos en ligne"
 
-version = "2022.09.01~ynh4"
+version = "2024.05.31~ynh1"
 
 maintainers = ["Thovi98"]
 
