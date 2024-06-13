@@ -30,7 +30,7 @@ if [ -z "${language_key:-}" ]; then
 fi
 
 if [ -z "${admin:-}" ]; then
-	admin=$admin
+	admin="admin"
 	ynh_app_setting_set --app=$app --key=admin --value=$admin
 fi
 
