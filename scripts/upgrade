@@ -83,8 +83,8 @@ ynh_script_progression --message="Running database migrations..."
 
 if ynh_compare_current_package_version --comparison lt --version 2022.09.01~ynh4
 then
-    ynh_exec_warn_less $final_path/live/bin/photoprism \
-		--assets-path=/home/yunohost.app/photoprism/assets \
+    ynh_exec_warn_less $install_dir/bin/photoprism \
+		--assets-path=$install_dir/assets \
 		--originals-path=/home/yunohost.app/photoprism/photos/originals \
 		--import-path=/home/yunohost.app/photoprism/photos/import users reset --yes
 fi
