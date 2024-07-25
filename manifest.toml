@@ -96,13 +96,7 @@ ram.runtime = "50M"
     [resources.apt]
     packages = [
         "exiftool",
-        "darktable",
-        "rawtherapee",
-        "imagemagick",
-        "libvips",
-        "libjxl-tools",
         "ffmpeg",
-        "libavcodec-extra",
         "sqlite3",
         "tzdata",
         "libc6-dev",
