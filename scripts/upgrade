@@ -1,75 +1,61 @@
 #!/bin/bash
 
-#=================================================
-# GENERIC START
-#=================================================
-# IMPORT GENERIC HELPERS
-#=================================================
-
 source _common.sh
 source /usr/share/yunohost/helpers
 
-
-#=================================================
-# CHECK VERSION
-#=================================================
-ynh_script_progression --message="Checking version..."
-
-upgrade_type=$(ynh_check_app_version_changed)
-
+ynh_script_progression "Checking version..."
 
 #=================================================
 # ENSURE DOWNWARD COMPATIBILITY
 #=================================================
-ynh_script_progression --message="Ensuring downward compatibility..."
+ynh_script_progression "Ensuring downward compatibility..."
 
 # If language_key doesn't exist, create it
 if [ -z "${language_key:-}" ]; then
-        language_key=$(ynh_app_setting_get --app=$app --key=language)
-	ynh_app_setting_set --app=$app --key=language_key --value=$language_key
-	ynh_app_setting_delete --app=$app --key=language
+        language_key=$(ynh_app_setting_get --key=language)
+	ynh_app_setting_set --key=language_key --value=$language_key
+	ynh_app_setting_delete --key=language
 fi
 
 #=================================================
 # NGINX CONFIGURATION
 #=================================================
-ynh_script_progression --message="Upgrading NGINX web server configuration..."
+ynh_script_progression "Upgrading NGINX web server configuration..."
 
 # Create a dedicated NGINX config
-ynh_add_nginx_config
+ynh_config_add_nginx
 
-#=================================================
-# SPECIFIC UPGRADE
 #=================================================
 # MAKE INSTALL
 #=================================================
-ynh_script_progression --message="Making install..."
+ynh_script_progression "Making install..."
 
-if [ "$upgrade_type" == "UPGRADE_APP" ]
+# FIXME: this is still supported but the recommendation is now to *always* re-setup the app sources wether or not the upstream sources changed
+if ynh_app_upstream_version_changed
 then
-	
+
 	# Download, check integrity, uncompress and patch the source from app.src
 	ynh_setup_source --dest_dir="$install_dir/build/"
-	
+
 	mkdir -p "$install_dir/live/"
 	rsync -a "$install_dir/build/opt/photoprism/" "$install_dir/live/"
-	ynh_secure_remove --file="$install_dir/build"
+	ynh_safe_rm "$install_dir/build"
 fi
 
-chmod 750 "$install_dir"
-chmod -R o-rwx "$install_dir"
-chown -R $app:$app "$install_dir"
-
+#REMOVEME? Assuming the install dir is setup using ynh_setup_source, the proper chmod/chowns are now already applied and it shouldn't be necessary to tweak perms | chmod 750 "$install_dir"
+#REMOVEME? Assuming the install dir is setup using ynh_setup_source, the proper chmod/chowns are now already applied and it shouldn't be necessary to tweak perms | chmod -R o-rwx "$install_dir"
+#REMOVEME? Assuming the install dir is setup using ynh_setup_source, the proper chmod/chowns are now already applied and it shouldn't be necessary to tweak perms | chown -R $app:$app "$install_dir"
 #=================================================
 # UPDATE DATA DIRECTORY
 #=================================================
-ynh_script_progression --message="Updating data directory..."
+ynh_script_progression "Updating data directory..."
 
 mkdir -p $data_dir
-if [ "$upgrade_type" == "UPGRADE_APP" ]
+# FIXME: this is still supported but the recommendation is now to *always* re-setup the app sources wether or not the upstream sources changed
+if ynh_app_upstream_version_changed
 then
 	rsync -a "$install_dir/live/assets/" "$data_dir/assets/"
-	ynh_secure_remove --file="$install_dir/live/assets/"
+	ynh_safe_rm "$install_dir/live/assets/"
 fi
 
 chmod 750 "$data_dir"
@@ -79,47 +65,45 @@ chown -R $app:www-data "$data_dir"
 #=================================================
 # UPDATE A CONFIG FILE
 #=================================================
-ynh_script_progression --message="Updating a configuration file..."
+ynh_script_progression "Updating configuration..."
 
-ynh_add_config --template="../conf/.env" --destination="$install_dir/.env"
+ynh_config_add --template=".env" --destination="$install_dir/.env"
 
-chmod 600 "$install_dir/.env"
-chown $app:$app "$install_dir/.env"
+#REMOVEME? Assuming the file is setup using ynh_config_add, the proper chmod/chowns are now already applied and it shouldn't be necessary to tweak perms | chmod 600 "$install_dir/.env"
+#REMOVEME? Assuming the file is setup using ynh_config_add, the proper chmod/chowns are now already applied and it shouldn't be necessary to tweak perms | chown $app:$app "$install_dir/.env"
 
 #=================================================
 # SETUP SYSTEMD
 #=================================================
-ynh_script_progression --message="Upgrading systemd configuration..."
+ynh_script_progression "Upgrading systemd configuration..."
 
 # Create a dedicated systemd config
-ynh_add_systemd_config
+ynh_config_add_systemd
 
-#=================================================
-# GENERIC FINALIZATION
 #=================================================
 # SETUP LOGROTATE
 #=================================================
-ynh_script_progression --message="Upgrading logrotate configuration..."
+ynh_script_progression "Upgrading logrotate configuration..."
 
 # Use logrotate to manage app-specific logfile(s)
-ynh_use_logrotate --non-append
+ynh_config_add_logrotate
 
 #=================================================
 # INTEGRATE SERVICE IN YUNOHOST
 #=================================================
-ynh_script_progression --message="Integrating service in YunoHost..."
+ynh_script_progression "Integrating service in YunoHost..."
 
 yunohost service add $app --description="AI-Powered Photos App for the Decentralized Web" --log="/var/log/$app/$app.log"
 
 #=================================================
 # START SYSTEMD SERVICE
 #=================================================
-ynh_script_progression --message="Starting a systemd service..."
+ynh_script_progression "Starting $app's systemd service..."
 
-ynh_exec_warn_less ynh_systemd_action --service_name=$app --action="start" --log_path="/var/log/$app/$app.log" --line_match="Started AI-Powered Photos App for the Decentralized Web"
+ynh_systemctl --service=$app --action="start"  --wait_until="Started AI-Powered Photos App for the Decentralized Web"
 
 #=================================================
 # END OF SCRIPT
 #=================================================
 
-ynh_script_progression --message="Upgrade of $app completed"
+ynh_script_progression "Upgrade of $app completed"

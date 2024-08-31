@@ -1,58 +1,47 @@
 #!/bin/bash
 
-#=================================================
-# GENERIC STARTING
-#=================================================
-# IMPORT GENERIC HELPERS
-#=================================================
-
 source _common.sh
 source /usr/share/yunohost/helpers
 
-
-#=================================================
-# STANDARD MODIFICATIONS
 #=================================================
 # STOP SYSTEMD SERVICE
 #=================================================
-ynh_script_progression --message="Stopping a systemd service..."
+ynh_script_progression "Stopping $app's systemd service..."
 
-ynh_systemd_action --service_name=$app --action="stop" --log_path="/var/log/$app/$app.log"
+ynh_systemctl --service=$app --action="stop"
 
 #=================================================
 # MODIFY URL IN NGINX CONF
 #=================================================
-ynh_script_progression --message="Updating NGINX web server configuration..."
+ynh_script_progression "Updating NGINX web server configuration..."
 
-ynh_change_url_nginx_config
+ynh_config_change_url_nginx
 
 #=================================================
 # SPECIFIC MODIFICATIONS
 #=================================================
 # UPDATE A CONFIG FILE
 #=================================================
-ynh_script_progression --message="Updating a configuration file..."
+ynh_script_progression "Updating configuration..."
 
 domain=$new_domain
 path=$new_path
 
-ynh_add_config --template="options.yml" --destination="$install_dir/live/config/options.yml"
+ynh_config_add --template="options.yml" --destination="$install_dir/live/config/options.yml"
 
-chmod 400 "$install_dir/live/config/options.yml"
-chown $app:$app "$install_dir/live/config/options.yml"
+#REMOVEME? Assuming the file is setup using ynh_config_add, the proper chmod/chowns are now already applied and it shouldn't be necessary to tweak perms | chmod 400 "$install_dir/live/config/options.yml"
+#REMOVEME? Assuming the file is setup using ynh_config_add, the proper chmod/chowns are now already applied and it shouldn't be necessary to tweak perms | chown $app:$app "$install_dir/live/config/options.yml"
 
-#=================================================
-# GENERIC FINALISATION
 #=================================================
 # START SYSTEMD SERVICE
 #=================================================
-ynh_script_progression --message="Starting a systemd service..."
+ynh_script_progression "Starting $app's systemd service..."
 
 # Start a systemd service
-ynh_exec_warn_less ynh_systemd_action --service_name=$app --action="start" --log_path="/var/log/$app/$app.log" --line_match="Started AI-Powered Photos App for the Decentralized Web"
+ynh_systemctl --service=$app --action="start"  --wait_until="Started AI-Powered Photos App for the Decentralized Web"
 
 #=================================================
 # END OF SCRIPT
 #=================================================
 
-ynh_script_progression --message="Change of URL completed for $app"
+ynh_script_progression "Change of URL completed for $app"

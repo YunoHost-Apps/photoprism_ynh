@@ -1,14 +1,7 @@
 #!/bin/bash
 
-#=================================================
-# GENERIC START
-#=================================================
-# IMPORT GENERIC HELPERS
-#=================================================
-
 source _common.sh
 source /usr/share/yunohost/helpers
-
 
 #=================================================
 # RETRIEVE ARGUMENTS FROM THE MANIFEST
@@ -24,56 +17,54 @@ fi
 # STORE SETTINGS FROM MANIFEST
 #=================================================
 
-ynh_app_setting_set --app=$app --key=language_key --value=$language_key
+ynh_app_setting_set --key=language_key --value=$language_key
 
 # Not saved by default
-ynh_app_setting_set --app=$app --key=password --value="$password"
+ynh_app_setting_set --key=password --value="$password"
 
 #=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
 #=================================================
-ynh_script_progression --message="Setting up source files..."
+ynh_script_progression "Setting up source files..."
 
 # Download, check integrity, uncompress and patch the source from app.src
 
-chmod 750 "$install_dir"
-chmod -R o-rwx "$install_dir"
-chown -R $app:www-data "$install_dir"
-
+#REMOVEME? Assuming the install dir is setup using ynh_setup_source, the proper chmod/chowns are now already applied and it shouldn't be necessary to tweak perms | chmod 750 "$install_dir"
+#REMOVEME? Assuming the install dir is setup using ynh_setup_source, the proper chmod/chowns are now already applied and it shouldn't be necessary to tweak perms | chmod -R o-rwx "$install_dir"
+#REMOVEME? Assuming the install dir is setup using ynh_setup_source, the proper chmod/chowns are now already applied and it shouldn't be necessary to tweak perms | chown -R $app:www-data "$install_dir"
 #=================================================
 # NGINX CONFIGURATION
 #=================================================
-ynh_script_progression --message="Configuring NGINX web server..."
+ynh_script_progression "Configuring NGINX web server..."
 
 # Create a dedicated NGINX config
-ynh_add_nginx_config
+ynh_config_add_nginx
 
 #=================================================
 # SPECIFIC SETUP
 #=================================================
 # MAKE INSTALL
 #=================================================
-ynh_script_progression --message="Making install..."
+ynh_script_progression "Making install..."
 
 ynh_setup_source --dest_dir="$install_dir/build"
 
 mkdir -p "$install_dir/live/"
 
 rsync -a "$install_dir/build/opt/photoprism/" "$install_dir/live/"
-ynh_secure_remove --file="$install_dir/build"
+ynh_safe_rm "$install_dir/build"
 
-chmod 750 "$install_dir"
-chmod -R o-rwx "$install_dir"
-chown -R $app:$app "$install_dir"
-
+#REMOVEME? Assuming the install dir is setup using ynh_setup_source, the proper chmod/chowns are now already applied and it shouldn't be necessary to tweak perms | chmod 750 "$install_dir"
+#REMOVEME? Assuming the install dir is setup using ynh_setup_source, the proper chmod/chowns are now already applied and it shouldn't be necessary to tweak perms | chmod -R o-rwx "$install_dir"
+#REMOVEME? Assuming the install dir is setup using ynh_setup_source, the proper chmod/chowns are now already applied and it shouldn't be necessary to tweak perms | chown -R $app:$app "$install_dir"
 #=================================================
 # CREATE DATA DIRECTORY
 #=================================================
-ynh_script_progression --message="Creating a data directory..."
+ynh_script_progression "Creating a data directory..."
 
 #mkdir -p $data_dir
 rsync -a "$install_dir/live/assets/" "$data_dir/assets/"
-ynh_secure_remove --file="$install_dir/live/assets/"
+ynh_safe_rm "$install_dir/live/assets/"
 
 chmod 750 "$data_dir"
 chmod -R o-rwx "$data_dir"
@@ -82,48 +73,46 @@ chown -R $app:www-data "$data_dir"
 #=================================================
 # ADD A CONFIGURATION
 #=================================================
-ynh_script_progression --message="Adding a configuration file..."
+ynh_script_progression "Adding $app's configuration..."
 
-ynh_add_config --template="../conf/.env" --destination="$install_dir/.env"
+ynh_config_add --template=".env" --destination="$install_dir/.env"
 
-chmod 600 "$install_dir/.env"
-chown $app:$app "$install_dir/.env"
+#REMOVEME? Assuming the file is setup using ynh_config_add, the proper chmod/chowns are now already applied and it shouldn't be necessary to tweak perms | chmod 600 "$install_dir/.env"
+#REMOVEME? Assuming the file is setup using ynh_config_add, the proper chmod/chowns are now already applied and it shouldn't be necessary to tweak perms | chown $app:$app "$install_dir/.env"
 
 #=================================================
 # SETUP SYSTEMD
 #=================================================
-ynh_script_progression --message="Configuring a systemd service..."
+ynh_script_progression "Configuring $app's systemd service..."
 
 # Create a dedicated systemd config
-ynh_add_systemd_config
+ynh_config_add_systemd
 
-#=================================================
-# GENERIC FINALIZATION
 #=================================================
 # SETUP LOGROTATE
 #=================================================
-ynh_script_progression --message="Configuring log rotation..."
+ynh_script_progression "Configuring log rotation..."
 
 # Use logrotate to manage application logfile(s)
-ynh_use_logrotate
+ynh_config_add_logrotate
 
 #=================================================
 # INTEGRATE SERVICE IN YUNOHOST
 #=================================================
-ynh_script_progression --message="Integrating service in YunoHost..."
+ynh_script_progression "Integrating service in YunoHost..."
 
 yunohost service add $app --description="AI-Powered Photos App for the Decentralized Web" --log="/var/log/$app/$app.log"
 
 #=================================================
 # START SYSTEMD SERVICE
 #=================================================
-ynh_script_progression --message="Starting a systemd service..."
+ynh_script_progression "Starting $app's systemd service..."
 
 # Start a systemd service
-ynh_exec_warn_less ynh_systemd_action --service_name=$app --action="start" --log_path="/var/log/$app/$app.log" --line_match="Started AI-Powered Photos App for the Decentralized Web"
+ynh_systemctl --service=$app --action="start"  --wait_until="Started AI-Powered Photos App for the Decentralized Web"
 
 #=================================================
 # END OF SCRIPT
 #=================================================
 
-ynh_script_progression --message="Installation of $app completed"
+ynh_script_progression "Installation of $app completed"
