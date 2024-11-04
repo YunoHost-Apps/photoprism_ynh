@@ -9,7 +9,7 @@ description.gl = "App de Fotos con tecnoloxía IA para a Web Descentralizada"
 description.ca = "Aplicació de fotografia amb IA per la web descentralitzada"
 description.fr = "Gestion de photos en ligne"
 
-version = "2022.09.01~ynh4"
+version = "2024.05.31~ynh1"
 
 maintainers = ["Thovi98"]
 
@@ -23,9 +23,9 @@ code = "https://github.com/photoprism/photoprism"
 fund = "https://www.photoprism.app/membership"
 
 [integration]
-yunohost = ">= 11.2"
+yunohost = ">= 12.0"
 architectures = ["amd64", "arm64", "armhf"]
-multi_instance = false
+multi_instance = true
 ldap = false
 sso = false
 disk = "50M"
@@ -48,6 +48,9 @@ ram.runtime = "50M"
     type = "group"
     default = "visitors"
 
+    [install.admin]
+    type = "user"
+
     [install.language]
     ask.en = "Choose the application language"
     ask.gl = "Elixe o idioma da aplicación"
@@ -67,25 +70,25 @@ ram.runtime = "50M"
 [resources]
     [resources.sources]
     [resources.sources.main]
-    format = "docker"
-    extract = true
-    prefetch = false
+        amd64.url = "https://github.com/photoprism/photoprism/releases/download/240531-60b3a4628/photoprism_240531-60b3a4628-linux-amd64.tar.gz"
+        amd64.sha256 = "1859df8e95c054fb4ff9c9de80ed0db96a1126f91d3e57946628fa92008229eb"
 
-    amd64.url = "photoprism/photoprism:220901-bullseye"
-    amd64.sha256 = "3381d40181ecdf62932e9530c6b81e6e0f8828a3d373d8dedf662aab96dafba4"
+        arm64.url = "https://github.com/photoprism/photoprism/releases/download/240531-60b3a4628/photoprism_240531-60b3a4628-linux-arm64.tar.gz"
+        arm64.sha256 = "16d5ef94dd733bd46db49b10c25a019b9510e690d40efee1d691c20a72263044"
 
-    arm64.url = "photoprism/photoprism:220901-bullseye"
-    arm64.sha256 = "3dcffda0a2b58c91479c883205025edee4ea799fc35be419f9bec708ccb54b7f"
+        armhf.url = "https://github.com/photoprism/photoprism/releases/download/240531-60b3a4628/photoprism_240531-60b3a4628-linux-arm.tar.gz"
+        armhf.sha256 = "be9f10f8fe65d2cde285d0eafca3067c9f4344eb56cc01566e52f14027f929f2"
 
-    armhf.url = "photoprism/photoprism:220901-bullseye"
-    armhf.sha256 = "a74f4d0a220af9a5291307bfba36f662d97c4df143f04d951e3c30111916317e"
+        autoupdate.strategy = "latest_github_release"
+        autoupdate.asset.amd64 = ".*amd64.tar.gz"
+        autoupdate.asset.arm64 = ".*arm64.tar.gz"
+        autoupdate.asset.armhf = ".*arm.tar.gz"
 
     [resources.system_user]
 
     [resources.install_dir]
-
+    
     [resources.data_dir]
-    subdirs = ["assets"]
 
     [resources.permissions]
     main.url = "/"
@@ -100,6 +103,15 @@ ram.runtime = "50M"
 
     [resources.apt]
     packages = [
+        "exiftool",
+        "darktable",
+        "rawtherapee",
+        "imagemagick",
+        "libvips42",
+        "libjxl-tools",
+        "ffmpeg",
+        "sqlite3",
+        "tzdata",
         "libc6-dev",
         "libssl-dev",
         "libxft-dev",
@@ -115,7 +127,6 @@ ram.runtime = "50M"
         "libfontconfig1",
         "libfontconfig1-dev",
         "libzmq3-dev",
-        "ffmpeg",
         "libimage-exiftool-perl",
         "mariadb-server",
     ]
