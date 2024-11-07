@@ -3,8 +3,6 @@
 source _common.sh
 source /usr/share/yunohost/helpers
 
-ynh_script_progression "Checking version..."
-
 #=================================================
 # ENSURE DOWNWARD COMPATIBILITY
 #=================================================
@@ -28,11 +26,7 @@ fi
 ynh_script_progression --message="Setting up source files..."
 
 # Download, check integrity, uncompress and patch the source from app.src
-ynh_setup_source --dest_dir="$install_dir"
-
-chmod 750 "$install_dir"
-chmod -R o-rwx "$install_dir"
-chown -R $app:www-data "$install_dir"
+ynh_setup_source --dest_dir="$install_dir" --full_replace
 
 #=================================================
 # NGINX CONFIGURATION
@@ -50,10 +44,6 @@ ynh_script_progression "Updating data directory..."
 # assets location has changed to the $install_dir
 ynh_safe_rm $data_dir/assets
 
-chmod 750 "$data_dir"
-chmod -R o-rwx "$data_dir"
-chown -R $app:www-data "$data_dir"
-
 #=================================================
 # UPDATE A CONFIG FILE
 #=================================================
@@ -61,8 +51,7 @@ ynh_script_progression "Updating configuration..."
 
 ynh_config_add --template=".env" --destination="$install_dir/.env"
 
-#REMOVEME? Assuming the file is setup using ynh_config_add, the proper chmod/chowns are now already applied and it shouldn't be necessary to tweak perms | chmod 600 "$install_dir/.env"
-#REMOVEME? Assuming the file is setup using ynh_config_add, the proper chmod/chowns are now already applied and it shouldn't be necessary to tweak perms | chown $app:$app "$install_dir/.env"
+chmod 400 "$install_dir/.env"
 
 #=================================================
 # RUNNNING DB MIGRATIONS
@@ -82,7 +71,6 @@ fi
 #=================================================
 ynh_script_progression "Upgrading systemd configuration..."
 
-# Create a dedicated systemd config
 ynh_config_add_systemd
 
 #=================================================
@@ -90,7 +78,6 @@ ynh_config_add_systemd
 #=================================================
 ynh_script_progression "Upgrading logrotate configuration..."
 
-# Use logrotate to manage app-specific logfile(s)
 ynh_config_add_logrotate
 
 #=================================================
@@ -105,7 +92,7 @@ yunohost service add $app --description="AI-Powered Photos App for the Decentral
 #=================================================
 ynh_script_progression "Starting $app's systemd service..."
 
-ynh_systemctl --service=$app --action="start"  --wait_until="Started AI-Powered Photos App for the Decentralized Web" --timeout 900
+ynh_systemctl --service=$app --action="start" --log_path="/var/log/$app/$app.log" --wait_until="server: listening on 127.0.0.1"
 
 #=================================================
 # END OF SCRIPT

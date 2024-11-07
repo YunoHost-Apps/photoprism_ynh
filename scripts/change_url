@@ -29,13 +29,14 @@ path=$new_path
 
 ynh_config_add --template=".env" --destination="$install_dir/.env"
 
+chmod 400 "$install_dir/.env"
+
 #=================================================
 # START SYSTEMD SERVICE
 #=================================================
 ynh_script_progression "Starting $app's systemd service..."
 
-# Start a systemd service
-ynh_systemctl --service=$app --action="start"  --wait_until="Started AI-Powered Photos App for the Decentralized Web" --timeout 900
+ynh_systemctl --service="$app" --action="start" --log_path="/var/log/$app/$app.log" --wait_until="server: listening on 127.0.0.1"
 
 #=================================================
 # END OF SCRIPT

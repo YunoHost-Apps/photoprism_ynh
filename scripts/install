@@ -27,29 +27,16 @@ ynh_app_setting_set --key=password --value="$password"
 #=================================================
 ynh_script_progression "Setting up source files..."
 
-# Download, check integrity, uncompress and patch the source from app.src
 ynh_setup_source --dest_dir="$install_dir"
+
+chown -R "$app:www-data" "$install_dir/"
 
 #=================================================
 # NGINX CONFIGURATION
 #=================================================
 ynh_script_progression "Configuring NGINX web server..."
 
-# Create a dedicated NGINX config
 ynh_config_add_nginx
-
-#=================================================
-# CREATE DATA DIRECTORY
-#=================================================
-ynh_script_progression "Creating a data directory..."
-
-#mkdir -p $data_dir
-rsync -a "$install_dir/live/assets/" "$data_dir/assets/"
-ynh_safe_rm "$install_dir/live/assets/"
-
-chmod 750 "$data_dir"
-chmod -R o-rwx "$data_dir"
-chown -R $app:www-data "$data_dir"
 
 #=================================================
 # ADD A CONFIGURATION
@@ -57,6 +44,7 @@ chown -R $app:www-data "$data_dir"
 ynh_script_progression "Adding $app's configuration..."
 
 ynh_config_add --template=".env" --destination="$install_dir/.env"
+chmod 400 "$install_dir/.env"
 
 #=================================================
 # SETUP SYSTEMD
@@ -86,8 +74,7 @@ yunohost service add $app --description="AI-Powered Photos App for the Decentral
 #=================================================
 ynh_script_progression "Starting $app's systemd service..."
 
-# Start a systemd service
-ynh_systemctl --service=$app --action="start"  --wait_until="Started AI-Powered Photos App for the Decentralized Web" --timeout 300
+ynh_systemctl --service=$app --action="start" --log_path="/var/log/$app/$app.log" --wait_until="server: listening on 127.0.0.1"
 
 #=================================================
 # END OF SCRIPT
