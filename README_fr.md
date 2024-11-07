@@ -5,7 +5,7 @@ Il NE doit PAS être modifié à la main.
 
 # Photoprism pour YunoHost
 
-[![Niveau d’intégration](https://dash.yunohost.org/integration/photoprism.svg)](https://dash.yunohost.org/appci/app/photoprism) ![Statut du fonctionnement](https://ci-apps.yunohost.org/ci/badges/photoprism.status.svg) ![Statut de maintenance](https://ci-apps.yunohost.org/ci/badges/photoprism.maintain.svg)
+[![Niveau d’intégration](https://dash.yunohost.org/integration/photoprism.svg)](https://ci-apps.yunohost.org/ci/apps/photoprism/) ![Statut du fonctionnement](https://ci-apps.yunohost.org/ci/badges/photoprism.status.svg) ![Statut de maintenance](https://ci-apps.yunohost.org/ci/badges/photoprism.maintain.svg)
 
 [![Installer Photoprism avec YunoHost](https://install-app.yunohost.org/install-with-yunohost.svg)](https://install-app.yunohost.org/?app=photoprism)
 
@@ -28,7 +28,7 @@ PhotoPrism® est une application de photos alimentée par l'IA pour le Web déce
 - Classification automatique des photos en fonction de leur contenu et de leur emplacement
 
 
-**Version incluse :** 2022.09.01~ynh4
+**Version incluse :** 2024.05.31~ynh1
 
 **Démo :** <https://demo-fr.photoprism.app>
 

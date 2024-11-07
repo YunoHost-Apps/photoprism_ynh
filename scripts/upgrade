@@ -17,7 +17,6 @@ ynh_script_progression --message="Checking version..."
 
 upgrade_type=$(ynh_check_app_version_changed)
 
-
 #=================================================
 # ENSURE DOWNWARD COMPATIBILITY
 #=================================================
@@ -30,6 +29,23 @@ if [ -z "${language_key:-}" ]; then
 	ynh_app_setting_delete --app=$app --key=language
 fi
 
+if [ -z "${admin:-}" ]; then
+	admin="admin"
+	ynh_app_setting_set --app=$app --key=admin --value=$admin
+fi
+
+#=================================================
+# DOWNLOAD, CHECK AND UNPACK SOURCE
+#=================================================
+ynh_script_progression --message="Setting up source files..."
+
+# Download, check integrity, uncompress and patch the source from app.src
+ynh_setup_source --dest_dir="$install_dir"
+
+chmod 750 "$install_dir"
+chmod -R o-rwx "$install_dir"
+chown -R $app:www-data "$install_dir"
+
 #=================================================
 # NGINX CONFIGURATION
 #=================================================
@@ -39,38 +55,12 @@ ynh_script_progression --message="Upgrading NGINX web server configuration..."
 ynh_add_nginx_config
 
 #=================================================
-# SPECIFIC UPGRADE
-#=================================================
-# MAKE INSTALL
-#=================================================
-ynh_script_progression --message="Making install..."
-
-if [ "$upgrade_type" == "UPGRADE_APP" ]
-then
-	
-	# Download, check integrity, uncompress and patch the source from app.src
-	ynh_setup_source --dest_dir="$install_dir/build/"
-	
-	mkdir -p "$install_dir/live/"
-	rsync -a "$install_dir/build/opt/photoprism/" "$install_dir/live/"
-	ynh_secure_remove --file="$install_dir/build"
-fi
-
-chmod 750 "$install_dir"
-chmod -R o-rwx "$install_dir"
-chown -R $app:$app "$install_dir"
-
-#=================================================
 # UPDATE DATA DIRECTORY
 #=================================================
 ynh_script_progression --message="Updating data directory..."
 
-mkdir -p $data_dir
-if [ "$upgrade_type" == "UPGRADE_APP" ]
-then
-	rsync -a "$install_dir/live/assets/" "$data_dir/assets/"
-	ynh_secure_remove --file="$install_dir/live/assets/"
-fi
+# assets location has changed to the $install_dir
+ynh_secure_remove $data_dir/assets
 
 chmod 750 "$data_dir"
 chmod -R o-rwx "$data_dir"
@@ -85,6 +75,19 @@ ynh_add_config --template="../conf/.env" --destination="$install_dir/.env"
 
 chmod 600 "$install_dir/.env"
 chown $app:$app "$install_dir/.env"
+
+#=================================================
+# RUNNNING DB MIGRATIONS
+#=================================================
+ynh_script_progression --message="Running database migrations..."
+
+if ynh_compare_current_package_version --comparison lt --version 2024.05.31~ynh1
+then
+    ynh_exec_warn_less $install_dir/bin/photoprism \
+		--assets-path=$install_dir/assets \
+		--originals-path=/home/yunohost.app/photoprism/photos/originals \
+		--import-path=/home/yunohost.app/photoprism/photos/import users reset --yes
+fi
 
 #=================================================
 # SETUP SYSTEMD
@@ -116,7 +119,7 @@ yunohost service add $app --description="AI-Powered Photos App for the Decentral
 #=================================================
 ynh_script_progression --message="Starting a systemd service..."
 
-ynh_exec_warn_less ynh_systemd_action --service_name=$app --action="start" --log_path="/var/log/$app/$app.log" --line_match="Started AI-Powered Photos App for the Decentralized Web"
+ynh_exec_warn_less ynh_systemd_action --service_name=$app --action="start" --log_path="/var/log/$app/$app.log" --line_match="Started AI-Powered Photos App for the Decentralized Web" --timeout 900
 
 #=================================================
 # END OF SCRIPT

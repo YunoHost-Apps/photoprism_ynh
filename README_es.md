@@ -5,7 +5,7 @@ No se debe editar a mano.
 
 # Photoprism para Yunohost
 
-[![Nivel de integración](https://dash.yunohost.org/integration/photoprism.svg)](https://dash.yunohost.org/appci/app/photoprism) ![Estado funcional](https://ci-apps.yunohost.org/ci/badges/photoprism.status.svg) ![Estado En Mantención](https://ci-apps.yunohost.org/ci/badges/photoprism.maintain.svg)
+[![Nivel de integración](https://dash.yunohost.org/integration/photoprism.svg)](https://ci-apps.yunohost.org/ci/apps/photoprism/) ![Estado funcional](https://ci-apps.yunohost.org/ci/badges/photoprism.status.svg) ![Estado En Mantención](https://ci-apps.yunohost.org/ci/badges/photoprism.maintain.svg)
 
 [![Instalar Photoprism con Yunhost](https://install-app.yunohost.org/install-with-yunohost.svg)](https://install-app.yunohost.org/?app=photoprism)
 
@@ -28,7 +28,7 @@ PhotoPrism® is an AI-Powered Photos App for the Decentralized Web. It makes use
 - Automatic classification of pictures based on their content and location
 
 
-**Versión actual:** 2022.09.01~ynh4
+**Versión actual:** 2024.05.31~ynh1
 
 **Demo:** <https://demo-fr.photoprism.app>
 
@@ -47,7 +47,7 @@ PhotoPrism® is an AI-Powered Photos App for the Decentralized Web. It makes use
 
 ## Información para desarrolladores
 
-Por favor enviar sus correcciones a la [`branch testing`](https://github.com/YunoHost-Apps/photoprism_ynh/tree/testing
+Por favor enviar sus correcciones a la [rama `testing`](https://github.com/YunoHost-Apps/photoprism_ynh/tree/testing).
 
 Para probar la rama `testing`, sigue asÍ:
 

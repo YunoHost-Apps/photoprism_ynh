@@ -34,7 +34,9 @@ ynh_app_setting_set --app=$app --key=password --value="$password"
 #=================================================
 ynh_script_progression --message="Setting up source files..."
 
+
 # Download, check integrity, uncompress and patch the source from app.src
+ynh_setup_source --dest_dir="$install_dir"
 
 chmod 750 "$install_dir"
 chmod -R o-rwx "$install_dir"
@@ -49,31 +51,9 @@ ynh_script_progression --message="Configuring NGINX web server..."
 ynh_add_nginx_config
 
 #=================================================
-# SPECIFIC SETUP
-#=================================================
-# MAKE INSTALL
-#=================================================
-ynh_script_progression --message="Making install..."
-
-ynh_setup_source --dest_dir="$install_dir/build"
-
-mkdir -p "$install_dir/live/"
-
-rsync -a "$install_dir/build/opt/photoprism/" "$install_dir/live/"
-ynh_secure_remove --file="$install_dir/build"
-
-chmod 750 "$install_dir"
-chmod -R o-rwx "$install_dir"
-chown -R $app:$app "$install_dir"
-
-#=================================================
 # CREATE DATA DIRECTORY
 #=================================================
 ynh_script_progression --message="Creating a data directory..."
-
-#mkdir -p $data_dir
-rsync -a "$install_dir/live/assets/" "$data_dir/assets/"
-ynh_secure_remove --file="$install_dir/live/assets/"
 
 chmod 750 "$data_dir"
 chmod -R o-rwx "$data_dir"
@@ -120,7 +100,7 @@ yunohost service add $app --description="AI-Powered Photos App for the Decentral
 ynh_script_progression --message="Starting a systemd service..."
 
 # Start a systemd service
-ynh_exec_warn_less ynh_systemd_action --service_name=$app --action="start" --log_path="/var/log/$app/$app.log" --line_match="Started AI-Powered Photos App for the Decentralized Web"
+ynh_exec_warn_less ynh_systemd_action --service_name=$app --action="start" --log_path="/var/log/$app/$app.log" --line_match="Started AI-Powered Photos App for the Decentralized Web" --timeout 900
 
 #=================================================
 # END OF SCRIPT
