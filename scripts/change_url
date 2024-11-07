@@ -27,10 +27,10 @@ ynh_script_progression "Updating configuration..."
 domain=$new_domain
 path=$new_path
 
-ynh_config_add --template="options.yml" --destination="$install_dir/live/config/options.yml"
 
-#REMOVEME? Assuming the file is setup using ynh_config_add, the proper chmod/chowns are now already applied and it shouldn't be necessary to tweak perms | chmod 400 "$install_dir/live/config/options.yml"
-#REMOVEME? Assuming the file is setup using ynh_config_add, the proper chmod/chowns are now already applied and it shouldn't be necessary to tweak perms | chown $app:$app "$install_dir/live/config/options.yml"
+ynh_config_add --template="../conf/.env" --destination="$install_dir/.env"
+
+chmod 400 "$install_dir/.env"
 
 #=================================================
 # START SYSTEMD SERVICE
@@ -38,7 +38,7 @@ ynh_config_add --template="options.yml" --destination="$install_dir/live/config/
 ynh_script_progression "Starting $app's systemd service..."
 
 # Start a systemd service
-ynh_systemctl --service=$app --action="start"  --wait_until="Started AI-Powered Photos App for the Decentralized Web"
+ynh_exec_warn_less ynh_systemd_action --service_name=$app --action="start" --log_path="/var/log/$app/$app.log" --line_match="Started AI-Powered Photos App for the Decentralized Web"  --timeout 300
 
 #=================================================
 # END OF SCRIPT

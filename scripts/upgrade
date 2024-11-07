@@ -3,8 +3,6 @@
 source _common.sh
 source /usr/share/yunohost/helpers
 
-ynh_script_progression "Checking version..."
-
 #=================================================
 # ENSURE DOWNWARD COMPATIBILITY
 #=================================================
@@ -17,6 +15,19 @@ if [ -z "${language_key:-}" ]; then
 	ynh_app_setting_delete --key=language
 fi
 
+if [ -z "${admin:-}" ]; then
+	admin="admin"
+	ynh_app_setting_set --app=$app --key=admin --value=$admin
+fi
+
+#=================================================
+# DOWNLOAD, CHECK AND UNPACK SOURCE
+#=================================================
+ynh_script_progression --message="Setting up source files..."
+
+# Download, check integrity, uncompress and patch the source from app.src
+ynh_setup_source --dest_dir="$install_dir" --full_replace
+
 #=================================================
 # NGINX CONFIGURATION
 #=================================================
@@ -26,41 +37,12 @@ ynh_script_progression "Upgrading NGINX web server configuration..."
 ynh_config_add_nginx
 
 #=================================================
-# MAKE INSTALL
-#=================================================
-ynh_script_progression "Making install..."
-
-# FIXME: this is still supported but the recommendation is now to *always* re-setup the app sources wether or not the upstream sources changed
-if ynh_app_upstream_version_changed
-then
-
-	# Download, check integrity, uncompress and patch the source from app.src
-	ynh_setup_source --dest_dir="$install_dir/build/"
-
-	mkdir -p "$install_dir/live/"
-	rsync -a "$install_dir/build/opt/photoprism/" "$install_dir/live/"
-	ynh_safe_rm "$install_dir/build"
-fi
-
-#REMOVEME? Assuming the install dir is setup using ynh_setup_source, the proper chmod/chowns are now already applied and it shouldn't be necessary to tweak perms | chmod 750 "$install_dir"
-#REMOVEME? Assuming the install dir is setup using ynh_setup_source, the proper chmod/chowns are now already applied and it shouldn't be necessary to tweak perms | chmod -R o-rwx "$install_dir"
-#REMOVEME? Assuming the install dir is setup using ynh_setup_source, the proper chmod/chowns are now already applied and it shouldn't be necessary to tweak perms | chown -R $app:$app "$install_dir"
-#=================================================
 # UPDATE DATA DIRECTORY
 #=================================================
 ynh_script_progression "Updating data directory..."
 
-mkdir -p $data_dir
-# FIXME: this is still supported but the recommendation is now to *always* re-setup the app sources wether or not the upstream sources changed
-if ynh_app_upstream_version_changed
-then
-	rsync -a "$install_dir/live/assets/" "$data_dir/assets/"
-	ynh_safe_rm "$install_dir/live/assets/"
-fi
-
-chmod 750 "$data_dir"
-chmod -R o-rwx "$data_dir"
-chown -R $app:www-data "$data_dir"
+# assets location has changed to the $install_dir
+ynh_secure_remove $data_dir/assets
 
 #=================================================
 # UPDATE A CONFIG FILE
@@ -69,15 +51,26 @@ ynh_script_progression "Updating configuration..."
 
 ynh_config_add --template=".env" --destination="$install_dir/.env"
 
-#REMOVEME? Assuming the file is setup using ynh_config_add, the proper chmod/chowns are now already applied and it shouldn't be necessary to tweak perms | chmod 600 "$install_dir/.env"
-#REMOVEME? Assuming the file is setup using ynh_config_add, the proper chmod/chowns are now already applied and it shouldn't be necessary to tweak perms | chown $app:$app "$install_dir/.env"
+chmod 400 "$install_dir/.env"
+
+#=================================================
+# RUNNNING DB MIGRATIONS
+#=================================================
+ynh_script_progression --message="Running database migrations..."
+
+if ynh_compare_current_package_version --comparison lt --version 2024.05.31~ynh1
+then
+    ynh_exec_warn_less $install_dir/bin/photoprism \
+		--assets-path=$install_dir/assets \
+		--originals-path=/home/yunohost.app/photoprism/photos/originals \
+		--import-path=/home/yunohost.app/photoprism/photos/import users reset --yes
+fi
 
 #=================================================
 # SETUP SYSTEMD
 #=================================================
 ynh_script_progression "Upgrading systemd configuration..."
 
-# Create a dedicated systemd config
 ynh_config_add_systemd
 
 #=================================================
@@ -85,7 +78,6 @@ ynh_config_add_systemd
 #=================================================
 ynh_script_progression "Upgrading logrotate configuration..."
 
-# Use logrotate to manage app-specific logfile(s)
 ynh_config_add_logrotate
 
 #=================================================
@@ -100,7 +92,7 @@ yunohost service add $app --description="AI-Powered Photos App for the Decentral
 #=================================================
 ynh_script_progression "Starting $app's systemd service..."
 
-ynh_systemctl --service=$app --action="start"  --wait_until="Started AI-Powered Photos App for the Decentralized Web"
+ynh_exec_warn_less ynh_systemd_action --service_name=$app --action="start" --log_path="/var/log/$app/$app.log" --line_match="Started AI-Powered Photos App for the Decentralized Web" --timeout 300
 
 #=================================================
 # END OF SCRIPT
