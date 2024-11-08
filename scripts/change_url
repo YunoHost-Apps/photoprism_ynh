@@ -38,7 +38,7 @@ chmod 400 "$install_dir/.env"
 ynh_script_progression "Starting $app's systemd service..."
 
 # Start a systemd service
-ynh_exec_warn_less ynh_systemd_action --service_name=$app --action="start" --log_path="/var/log/$app/$app.log" --line_match="Started AI-Powered Photos App for the Decentralized Web"  --timeout 300
+ynh_exec_warn_less ynh_systemd_action --service_name=$app --action="start" --log_path="/var/log/$app/$app.log" --wait_until="Started AI-Powered Photos App for the Decentralized Web"  --timeout 300
 
 #=================================================
 # END OF SCRIPT
