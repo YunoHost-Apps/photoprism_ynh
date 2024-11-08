@@ -50,7 +50,6 @@ ynh_secure_remove $data_dir/assets
 ynh_script_progression "Updating configuration..."
 
 ynh_config_add --template=".env" --destination="$install_dir/.env"
-
 chmod 400 "$install_dir/.env"
 
 #=================================================
@@ -92,7 +91,7 @@ yunohost service add $app --description="AI-Powered Photos App for the Decentral
 #=================================================
 ynh_script_progression "Starting $app's systemd service..."
 
-ynh_exec_warn_less ynh_systemd_action --service_name=$app --action="start" --log_path="/var/log/$app/$app.log" --wait_until="Started AI-Powered Photos App for the Decentralized Web" --timeout 300
+ynh_systemctl --service="${app}" --action="start" --log_path="/var/log/$app/$app.log" --wait_until="Started AI-Powered Photos App for the Decentralized Web" --timeout 300
 
 #=================================================
 # END OF SCRIPT
