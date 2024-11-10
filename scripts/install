@@ -73,7 +73,7 @@ yunohost service add $app --description="AI-Powered Photos App for the Decentral
 #=================================================
 ynh_script_progression "Starting $app's systemd service..."
 
-ynh_systemctl --service="${app}" --action="start" --log_path="/var/log/$app/$app.log" --wait_until="Started AI-Powered Photos App for the Decentralized Web" --timeout 300
+ynh_hide_warnings ynh_systemctl --service="${app}" --action="start" --log_path="/var/log/$app/$app.log" --wait_until="Started AI-Powered Photos App for the Decentralized Web" --timeout 600
 
 #=================================================
 # END OF SCRIPT
