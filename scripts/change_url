@@ -36,9 +36,7 @@ chmod 400 "$install_dir/.env"
 #=================================================
 ynh_script_progression "Starting $app's systemd service..."
 
-ynh_hide_warnings ynh_systemctl --service="${app}" --action="start" --log_path="/var/log/$app/$app.log" --wait_until="Started AI-Powered Photos App for the Decentralized Web"
-
-sleep 30
+ynh_hide_warnings ynh_systemctl --service="${app}" --action="start" --log_path="/var/log/$app/$app.log" --wait_until="server: listening on 127.0.0.1"
 
 #=================================================
 # END OF SCRIPT
