@@ -119,7 +119,7 @@ yunohost service add $app --description="AI-Powered Photos App for the Decentral
 #=================================================
 ynh_script_progression --message="Starting a systemd service..."
 
-ynh_exec_warn_less ynh_systemd_action --service_name=$app --action="start" --log_path="/var/log/$app/$app.log" --line_match="Started AI-Powered Photos App for the Decentralized Web" --timeout 900
+ynh_exec_warn_less ynh_systemd_action --service_name=$app --action="start" --log_path="/var/log/$app/$app.log" --line_match="server: listening on 127.0.0.1"
 
 #=================================================
 # END OF SCRIPT
