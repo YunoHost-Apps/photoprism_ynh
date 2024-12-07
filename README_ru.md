@@ -5,7 +5,9 @@
 
 # Photoprism для YunoHost
 
-[![Уровень интеграции](https://dash.yunohost.org/integration/photoprism.svg)](https://ci-apps.yunohost.org/ci/apps/photoprism/) ![Состояние работы](https://ci-apps.yunohost.org/ci/badges/photoprism.status.svg) ![Состояние сопровождения](https://ci-apps.yunohost.org/ci/badges/photoprism.maintain.svg)
+[![Уровень интеграции](https://apps.yunohost.org/badge/integration/photoprism)](https://ci-apps.yunohost.org/ci/apps/photoprism/)
+![Состояние работы](https://apps.yunohost.org/badge/state/photoprism)
+![Состояние сопровождения](https://apps.yunohost.org/badge/maintained/photoprism)
 
 [![Установите Photoprism с YunoHost](https://install-app.yunohost.org/install-with-yunohost.svg)](https://install-app.yunohost.org/?app=photoprism)
 
