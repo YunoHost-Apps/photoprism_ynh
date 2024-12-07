@@ -5,7 +5,9 @@ Il NE doit PAS être modifié à la main.
 
 # Photoprism pour YunoHost
 
-[![Niveau d’intégration](https://dash.yunohost.org/integration/photoprism.svg)](https://ci-apps.yunohost.org/ci/apps/photoprism/) ![Statut du fonctionnement](https://ci-apps.yunohost.org/ci/badges/photoprism.status.svg) ![Statut de maintenance](https://ci-apps.yunohost.org/ci/badges/photoprism.maintain.svg)
+[![Niveau d’intégration](https://apps.yunohost.org/badge/integration/photoprism)](https://ci-apps.yunohost.org/ci/apps/photoprism/)
+![Statut du fonctionnement](https://apps.yunohost.org/badge/state/photoprism)
+![Statut de maintenance](https://apps.yunohost.org/badge/maintained/photoprism)
 
 [![Installer Photoprism avec YunoHost](https://install-app.yunohost.org/install-with-yunohost.svg)](https://install-app.yunohost.org/?app=photoprism)
 

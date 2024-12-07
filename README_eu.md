@@ -5,7 +5,9 @@ EZ editatu eskuz.
 
 # Photoprism YunoHost-erako
 
-[![Integrazio maila](https://dash.yunohost.org/integration/photoprism.svg)](https://ci-apps.yunohost.org/ci/apps/photoprism/) ![Funtzionamendu egoera](https://ci-apps.yunohost.org/ci/badges/photoprism.status.svg) ![Mantentze egoera](https://ci-apps.yunohost.org/ci/badges/photoprism.maintain.svg)
+[![Integrazio maila](https://apps.yunohost.org/badge/integration/photoprism)](https://ci-apps.yunohost.org/ci/apps/photoprism/)
+![Funtzionamendu egoera](https://apps.yunohost.org/badge/state/photoprism)
+![Mantentze egoera](https://apps.yunohost.org/badge/maintained/photoprism)
 
 [![Instalatu Photoprism YunoHost-ekin](https://install-app.yunohost.org/install-with-yunohost.svg)](https://install-app.yunohost.org/?app=photoprism)
 
