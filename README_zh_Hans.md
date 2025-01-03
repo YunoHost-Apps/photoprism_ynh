@@ -5,7 +5,9 @@
 
 # YunoHost 上的 Photoprism
 
-[![集成程度](https://dash.yunohost.org/integration/photoprism.svg)](https://ci-apps.yunohost.org/ci/apps/photoprism/) ![工作状态](https://ci-apps.yunohost.org/ci/badges/photoprism.status.svg) ![维护状态](https://ci-apps.yunohost.org/ci/badges/photoprism.maintain.svg)
+[![集成程度](https://apps.yunohost.org/badge/integration/photoprism)](https://ci-apps.yunohost.org/ci/apps/photoprism/)
+![工作状态](https://apps.yunohost.org/badge/state/photoprism)
+![维护状态](https://apps.yunohost.org/badge/maintained/photoprism)
 
 [![使用 YunoHost 安装 Photoprism](https://install-app.yunohost.org/install-with-yunohost.svg)](https://install-app.yunohost.org/?app=photoprism)
 

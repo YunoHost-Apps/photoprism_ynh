@@ -5,7 +5,9 @@ Ini TIDAK boleh diedit dengan tangan.
 
 # Photoprism untuk YunoHost
 
-[![Tingkat integrasi](https://dash.yunohost.org/integration/photoprism.svg)](https://ci-apps.yunohost.org/ci/apps/photoprism/) ![Status kerja](https://ci-apps.yunohost.org/ci/badges/photoprism.status.svg) ![Status pemeliharaan](https://ci-apps.yunohost.org/ci/badges/photoprism.maintain.svg)
+[![Tingkat integrasi](https://apps.yunohost.org/badge/integration/photoprism)](https://ci-apps.yunohost.org/ci/apps/photoprism/)
+![Status kerja](https://apps.yunohost.org/badge/state/photoprism)
+![Status pemeliharaan](https://apps.yunohost.org/badge/maintained/photoprism)
 
 [![Pasang Photoprism dengan YunoHost](https://install-app.yunohost.org/install-with-yunohost.svg)](https://install-app.yunohost.org/?app=photoprism)
 
