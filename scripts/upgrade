@@ -1,66 +1,44 @@
 #!/bin/bash
 
-#=================================================
-# GENERIC START
-#=================================================
-# IMPORT GENERIC HELPERS
-#=================================================
-
 source _common.sh
 source /usr/share/yunohost/helpers
 
-
-#=================================================
-# CHECK VERSION
-#=================================================
-ynh_script_progression --message="Checking version..."
-
-upgrade_type=$(ynh_check_app_version_changed)
+ynh_script_progression "Checking version..."
 
 #=================================================
 # ENSURE DOWNWARD COMPATIBILITY
 #=================================================
-ynh_script_progression --message="Ensuring downward compatibility..."
+ynh_script_progression "Ensuring downward compatibility..."
 
-# If language_key doesn't exist, create it
-if [ -z "${language_key:-}" ]; then
-        language_key=$(ynh_app_setting_get --app=$app --key=language)
-	ynh_app_setting_set --app=$app --key=language_key --value=$language_key
-	ynh_app_setting_delete --app=$app --key=language
-fi
 
-if [ -z "${admin:-}" ]; then
-	admin="admin"
-	ynh_app_setting_set --app=$app --key=admin --value=$admin
-fi
+
+ynh_app_setting_set_default --key=language_key --value=$(ynh_app_setting_get --key=language)
+
+ynh_app_setting_set_default --key=admin --value="admin"
 
 #=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
 #=================================================
-ynh_script_progression --message="Setting up source files..."
+ynh_script_progression "Setting up source files..."
 
 # Download, check integrity, uncompress and patch the source from app.src
 ynh_setup_source --dest_dir="$install_dir"
 
-chmod 750 "$install_dir"
-chmod -R o-rwx "$install_dir"
-chown -R $app:www-data "$install_dir"
-
 #=================================================
 # NGINX CONFIGURATION
 #=================================================
-ynh_script_progression --message="Upgrading NGINX web server configuration..."
+ynh_script_progression "Upgrading NGINX web server configuration..."
 
 # Create a dedicated NGINX config
-ynh_add_nginx_config
+ynh_config_add_nginx
 
 #=================================================
 # UPDATE DATA DIRECTORY
 #=================================================
-ynh_script_progression --message="Updating data directory..."
+ynh_script_progression "Updating data directory..."
 
 # assets location has changed to the $install_dir
-ynh_secure_remove $data_dir/assets
+ynh_safe_rm $data_dir/assets
 
 chmod 750 "$data_dir"
 chmod -R o-rwx "$data_dir"
@@ -69,21 +47,19 @@ chown -R $app:www-data "$data_dir"
 #=================================================
 # UPDATE A CONFIG FILE
 #=================================================
-ynh_script_progression --message="Updating a configuration file..."
+ynh_script_progression "Updating configuration..."
 
-ynh_add_config --template="../conf/.env" --destination="$install_dir/.env"
+ynh_config_add --template=".env" --destination="$install_dir/.env"
 
-chmod 600 "$install_dir/.env"
-chown $app:$app "$install_dir/.env"
 
 #=================================================
 # RUNNNING DB MIGRATIONS
 #=================================================
-ynh_script_progression --message="Running database migrations..."
+ynh_script_progression "Running database migrations..."
 
-if ynh_compare_current_package_version --comparison lt --version 2024.05.31~ynh1
+if ynh_app_upgrading_from_version_before 2024.05.31~ynh1
 then
-    ynh_exec_warn_less $install_dir/bin/photoprism \
+    ynh_hide_warnings $install_dir/bin/photoprism \
 		--assets-path=$install_dir/assets \
 		--originals-path=/home/yunohost.app/photoprism/photos/originals \
 		--import-path=/home/yunohost.app/photoprism/photos/import users reset --yes
@@ -92,37 +68,35 @@ fi
 #=================================================
 # SETUP SYSTEMD
 #=================================================
-ynh_script_progression --message="Upgrading systemd configuration..."
+ynh_script_progression "Upgrading systemd configuration..."
 
 # Create a dedicated systemd config
-ynh_add_systemd_config
+ynh_config_add_systemd
 
-#=================================================
-# GENERIC FINALIZATION
 #=================================================
 # SETUP LOGROTATE
 #=================================================
-ynh_script_progression --message="Upgrading logrotate configuration..."
+ynh_script_progression "Upgrading logrotate configuration..."
 
 # Use logrotate to manage app-specific logfile(s)
-ynh_use_logrotate --non-append
+ynh_config_add_logrotate
 
 #=================================================
 # INTEGRATE SERVICE IN YUNOHOST
 #=================================================
-ynh_script_progression --message="Integrating service in YunoHost..."
+ynh_script_progression "Integrating service in YunoHost..."
 
 yunohost service add $app --description="AI-Powered Photos App for the Decentralized Web" --log="/var/log/$app/$app.log"
 
 #=================================================
 # START SYSTEMD SERVICE
 #=================================================
-ynh_script_progression --message="Starting a systemd service..."
+ynh_script_progression "Starting $app's systemd service..."
 
-ynh_exec_warn_less ynh_systemd_action --service_name=$app --action="start" --log_path="/var/log/$app/$app.log" --line_match="server: listening on 127.0.0.1" --timeout 900
+ynh_systemctl --service=$app --action="start"  --wait_until="server: listening on 127.0.0.1"
 
 #=================================================
 # END OF SCRIPT
 #=================================================
 
-ynh_script_progression --message="Upgrade of $app completed"
+ynh_script_progression "Upgrade of $app completed"
