@@ -9,7 +9,7 @@ description.gl = "App de Fotos con tecnoloxía IA para a Web Descentralizada"
 description.ca = "Aplicació de fotografia amb IA per la web descentralitzada"
 description.fr = "Gestion de photos en ligne"
 
-version = "2024.09.15~ynh1"
+version = "2024.09.15~ynh2"
 
 maintainers = ["Thovi98"]
 
