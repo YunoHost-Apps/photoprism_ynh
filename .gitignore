@@ -1,3 +1,6 @@
 *~
 *.sw[op]
 doc/screenshots/.DS_Store
+'*~' 
+'*.sw[op]' 
+'.DS_Store' 
