@@ -9,7 +9,7 @@ description.gl = "App de Fotos con tecnoloxía IA para a Web Descentralizada"
 description.ca = "Aplicació de fotografia amb IA per la web descentralitzada"
 description.fr = "Gestion de photos en ligne"
 
-version = "2025.02.23~ynh1"
+version = "2025.02.24~ynh1"
 
 maintainers = ["Thovi98"]
 
@@ -71,14 +71,14 @@ ram.runtime = "50M"
 [resources]
     [resources.sources]
     [resources.sources.main]
-        amd64.url = "https://github.com/photoprism/photoprism/releases/download/250223-b79d21907/photoprism_250223-b79d21907-linux-amd64.tar.gz"
-        amd64.sha256 = "44791ac46b78a634a4131c6b279e284c70e1b03d1d4bc759dfb40b62019681ad"
+        amd64.url = "https://github.com/photoprism/photoprism/releases/download/250224-834c16bc7/photoprism_250224-834c16bc7-linux-amd64.tar.gz"
+        amd64.sha256 = "67e12ef332673acf761417d614f28567cbad3f63ef0d59f5a199ba51fe6642fa"
 
-        arm64.url = "https://github.com/photoprism/photoprism/releases/download/250223-b79d21907/photoprism_250223-b79d21907-linux-arm64.tar.gz"
-        arm64.sha256 = "5ce484c2789b73ecdfb7ee9b351a153f0de57f83b83bbede66eeeb487b6fee65"
+        arm64.url = "https://github.com/photoprism/photoprism/releases/download/250224-834c16bc7/photoprism_250224-834c16bc7-linux-arm64.tar.gz"
+        arm64.sha256 = "887b036e82bfedf1b54866527554dfae401cafe29651fe9d4c2abcdb46db636e"
 
-        armhf.url = "https://github.com/photoprism/photoprism/releases/download/250223-b79d21907/photoprism_250223-b79d21907-linux-arm.tar.gz"
-        armhf.sha256 = "95450b061c7c12d5cf3fef05744ef2d649a8f48aca4c536234dadbfe8b52cef4"
+        armhf.url = "https://github.com/photoprism/photoprism/releases/download/250224-834c16bc7/photoprism_250224-834c16bc7-linux-arm.tar.gz"
+        armhf.sha256 = "fd2761c956f992fa5dde5163694dd2faf48ca8183239137a5cb5a05235dcbf60"
 
         autoupdate.strategy = "latest_github_release"
         autoupdate.version_regex = "([0-9]{2})([0-9]{2})([0-9]{2})"
