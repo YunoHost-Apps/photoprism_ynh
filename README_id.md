@@ -30,7 +30,7 @@ PhotoPrism® is an AI-Powered Photos App for the Decentralized Web. It makes use
 - Automatic classification of pictures based on their content and location
 
 
-**Versi terkirim:** 2025.02.24~ynh1
+**Versi terkirim:** 2025.02.28~ynh1
 
 **Demo:** <https://demo-fr.photoprism.app>
 
