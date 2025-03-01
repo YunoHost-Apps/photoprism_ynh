@@ -27,8 +27,11 @@ yunohost = ">= 12.0"
 helpers_version = "2.1"
 architectures = ["amd64", "arm64", "armhf"]
 multi_instance = true
+
 ldap = false
+
 sso = false
+
 disk = "50M"
 ram.build = "300M"
 ram.runtime = "50M"
@@ -49,9 +52,6 @@ ram.runtime = "50M"
     type = "group"
     default = "visitors"
 
-    [install.admin]
-    type = "user"
-
     [install.language]
     ask.en = "Choose the application language"
     ask.gl = "Elixe o idioma da aplicación"
@@ -60,6 +60,9 @@ ram.runtime = "50M"
     type = "select"
     choices = ["fr", "en"]
     default = "fr"
+
+    [install.admin]
+    type = "user"
 
     [install.password]
     help.en = "Photoprism currently supports only one user : admin. Choose a password here."
@@ -70,21 +73,22 @@ ram.runtime = "50M"
 
 [resources]
     [resources.sources]
+
     [resources.sources.main]
-        amd64.url = "https://github.com/photoprism/photoprism/releases/download/250228-43447fa38/photoprism_250228-43447fa38-linux-amd64.tar.gz"
-        amd64.sha256 = "3b175132c739e92d0c4b2a32d581c2b46fe325c3e785c030f3d66d9e7bd84983"
+    amd64.url = "https://github.com/photoprism/photoprism/releases/download/250228-43447fa38/photoprism_250228-43447fa38-linux-amd64.tar.gz"
+    amd64.sha256 = "3b175132c739e92d0c4b2a32d581c2b46fe325c3e785c030f3d66d9e7bd84983"
 
-        arm64.url = "https://github.com/photoprism/photoprism/releases/download/250228-43447fa38/photoprism_250228-43447fa38-linux-arm64.tar.gz"
-        arm64.sha256 = "a13a652c75e35af52341b20e86549a4b4a11273c7efa189fe421b7e22f26ac28"
+    arm64.url = "https://github.com/photoprism/photoprism/releases/download/250228-43447fa38/photoprism_250228-43447fa38-linux-arm64.tar.gz"
+    arm64.sha256 = "a13a652c75e35af52341b20e86549a4b4a11273c7efa189fe421b7e22f26ac28"
 
-        armhf.url = "https://github.com/photoprism/photoprism/releases/download/250228-43447fa38/photoprism_250228-43447fa38-linux-arm.tar.gz"
-        armhf.sha256 = "b33b907277b231c537d0c71ada00156de36ddde9c661c5169d1428d80a02f380"
+    armhf.url = "https://github.com/photoprism/photoprism/releases/download/250228-43447fa38/photoprism_250228-43447fa38-linux-arm.tar.gz"
+    armhf.sha256 = "b33b907277b231c537d0c71ada00156de36ddde9c661c5169d1428d80a02f380"
 
-        autoupdate.strategy = "latest_github_release"
-        autoupdate.version_regex = "([0-9]{2})([0-9]{2})([0-9]{2})"
-        autoupdate.asset.amd64 = ".*amd64.tar.gz"
-        autoupdate.asset.arm64 = ".*arm64.tar.gz"
-        autoupdate.asset.armhf = ".*arm.tar.gz"
+    autoupdate.strategy = "latest_github_release"
+    autoupdate.version_regex = "([0-9]{2})([0-9]{2})([0-9]{2})"
+    autoupdate.asset.amd64 = ".*amd64.tar.gz"
+    autoupdate.asset.arm64 = ".*arm64.tar.gz"
+    autoupdate.asset.armhf = ".*arm.tar.gz"
 
     [resources.system_user]
 
@@ -92,6 +96,7 @@ ram.runtime = "50M"
     group = "www-data:r-x"
 
     [resources.data_dir]
+    group = "www-data:r-x"
 
     [resources.permissions]
     main.url = "/"

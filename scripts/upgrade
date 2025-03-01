@@ -1,53 +1,42 @@
 #!/bin/bash
 
+#=================================================
+# IMPORT GENERIC HELPERS
+#=================================================
+
 source _common.sh
 source /usr/share/yunohost/helpers
 
-ynh_script_progression "Checking version..."
+#=================================================
+# STOP SYSTEMD SERVICE
+#=================================================
+ynh_script_progression "Stopping $app's systemd service..."
+
+ynh_systemctl --service="$app" --action="stop"
 
 #=================================================
 # ENSURE DOWNWARD COMPATIBILITY
 #=================================================
 ynh_script_progression "Ensuring downward compatibility..."
 
-
-
 ynh_app_setting_set_default --key=language_key --value=$(ynh_app_setting_get --key=language)
-
 ynh_app_setting_set_default --key=admin --value="admin"
-
-#=================================================
-# DOWNLOAD, CHECK AND UNPACK SOURCE
-#=================================================
-ynh_script_progression "Setting up source files..."
-
-# Download, check integrity, uncompress and patch the source from app.src
-ynh_setup_source --dest_dir="$install_dir"
-
-#=================================================
-# NGINX CONFIGURATION
-#=================================================
-ynh_script_progression "Upgrading NGINX web server configuration..."
-
-# Create a dedicated NGINX config
-ynh_config_add_nginx
-
-#=================================================
-# UPDATE DATA DIRECTORY
-#=================================================
-ynh_script_progression "Updating data directory..."
 
 # assets location has changed to the $install_dir
 ynh_safe_rm $data_dir/assets
 
-chmod 750 "$data_dir"
-chmod -R o-rwx "$data_dir"
-chown -R $app:www-data "$data_dir"
+#=================================================
+# DOWNLOAD, CHECK AND UNPACK SOURCE
+#=================================================
+ynh_script_progression "Upgrading source files..."
+
+# Download, check integrity, uncompress and patch the source from manifest.toml
+ynh_setup_source --dest_dir="$install_dir" --full_replace --keep=".env"
 
 #=================================================
 # UPDATE A CONFIG FILE
 #=================================================
-ynh_script_progression "Updating configuration..."
+ynh_script_progression "Updating $app's configuration files..."
 
 ynh_config_add --template=".env" --destination="$install_dir/.env"
 
@@ -61,39 +50,28 @@ if ynh_app_upgrading_from_version_before 2024.05.31~ynh1
 then
     ynh_hide_warnings $install_dir/bin/photoprism \
 		--assets-path=$install_dir/assets \
-		--originals-path=/home/yunohost.app/photoprism/photos/originals \
-		--import-path=/home/yunohost.app/photoprism/photos/import users reset --yes
+		--originals-path=$data_dir/photos/originals \
+		--import-path=$data_dir/photos/import users reset --yes
 fi
 
 #=================================================
-# SETUP SYSTEMD
+# REAPPLY SYSTEM CONFIGURATIONS
 #=================================================
-ynh_script_progression "Upgrading systemd configuration..."
+ynh_script_progression "Upgrading system configurations related to $app..."
 
-# Create a dedicated systemd config
+ynh_config_add_nginx
+
 ynh_config_add_systemd
+yunohost service add "$app" --description="AI-Powered Photos App for the Decentralized Web" --log="/var/log/$app/$app.log"
 
-#=================================================
-# SETUP LOGROTATE
-#=================================================
-ynh_script_progression "Upgrading logrotate configuration..."
-
-# Use logrotate to manage app-specific logfile(s)
 ynh_config_add_logrotate
-
-#=================================================
-# INTEGRATE SERVICE IN YUNOHOST
-#=================================================
-ynh_script_progression "Integrating service in YunoHost..."
-
-yunohost service add $app --description="AI-Powered Photos App for the Decentralized Web" --log="/var/log/$app/$app.log"
 
 #=================================================
 # START SYSTEMD SERVICE
 #=================================================
 ynh_script_progression "Starting $app's systemd service..."
 
-ynh_hide_warnings ynh_systemctl --service=$app --action="start"  --wait_until="server: listening on 127.0.0.1"
+ynh_systemctl --service="$app" --action="start" --wait_until="server: listening on 127.0.0.1" --log_path="/var/log/$app/$app.log"
 
 #=================================================
 # END OF SCRIPT
