@@ -1,0 +1,7 @@
+Sad news: since https://github.com/photoprism/photoprism/releases/tag/250425-21ddba459, armv7 versions are not part anymore of the regular releases of Photoprism.
+
+Rasberry Pis with armv7 hardware will not be able to update automatically from YunoHost.
+
+Normally, there will still be releases avalaible for those devices, but it will be more randomly.
+
+So if you have this hardware and wants to be able to update in the future, please create an issue https://github.com/YunoHost-Apps/photoprism_ynh. Thanks.
