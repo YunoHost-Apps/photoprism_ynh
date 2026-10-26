@@ -22,6 +22,8 @@ ynh_app_setting_set --key=language_key --value=$language_key
 # Not saved by default
 ynh_app_setting_set --key=password --value="$password"
 
+ynh_app_setting_set --key=protect_against_basic_auth_spoofing --value=False
+
 #=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
 #=================================================

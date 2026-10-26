@@ -22,6 +22,8 @@ ynh_script_progression "Ensuring downward compatibility..."
 ynh_app_setting_set_default --key=language_key --value=$(ynh_app_setting_get --key=language)
 ynh_app_setting_set_default --key=admin --value="admin"
 
+ynh_app_setting_set --key=protect_against_basic_auth_spoofing --value=False
+
 # assets location has changed to the $install_dir
 ynh_safe_rm $data_dir/assets
 
